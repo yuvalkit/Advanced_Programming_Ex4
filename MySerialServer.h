@@ -1,0 +1,14 @@
+//
+// Created by giladby on 09/01/2020.
+//
+
+#ifndef ADVANCED_PROGRAMMING_EX4_MYSERIALSERVER_H
+#define ADVANCED_PROGRAMMING_EX4_MYSERIALSERVER_H
+
+
+class MySerialServer {
+
+};
+
+
+#endif //ADVANCED_PROGRAMMING_EX4_MYSERIALSERVER_H
