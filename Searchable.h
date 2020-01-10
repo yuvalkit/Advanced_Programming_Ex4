@@ -1,0 +1,12 @@
+//
+// Created by giladby on 10/01/2020.
+//
+
+#ifndef ADVANCED_PROGRAMMING_EX4_SEARCHABLE_H
+#define ADVANCED_PROGRAMMING_EX4_SEARCHABLE_H
+
+class Searchable {
+
+};
+
+#endif //ADVANCED_PROGRAMMING_EX4_SEARCHABLE_H

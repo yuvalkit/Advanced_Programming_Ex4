@@ -14,6 +14,7 @@ using namespace std;
 class Utils {
 public:
     static vector<string> split(string str, const string& delimiter);
+    static string removeSpaces(const string& str);
 };
 
 

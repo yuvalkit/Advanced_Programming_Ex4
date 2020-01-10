@@ -18,3 +18,15 @@ vector<string> Utils::split(string str, const string &delimiter) {
     strings.emplace_back(str);
     return strings;
 }
+
+//remove spaces from the given string
+string Utils::removeSpaces(const string &str) {
+    string result;
+    for (char c : str) {
+        if (c != ' ') {
+            string s(1, c);
+            result += s;
+        }
+    }
+    return result;
+}
