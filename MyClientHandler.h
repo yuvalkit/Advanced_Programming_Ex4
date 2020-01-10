@@ -14,10 +14,11 @@
 
 using namespace std;
 
+template <class Solution>
 class MyClientHandler : public ClientHandler {
 private:
-    Solver* solver;
-    CacheManager* cm;
+    Solver<string, Solution>* solver;
+    CacheManager<string, Solution>* cm;
 public:
     void handleClient(int clientSocket);
 };
