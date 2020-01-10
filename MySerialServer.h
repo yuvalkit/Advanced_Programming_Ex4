@@ -14,9 +14,10 @@ class MySerialServer : public server_side::Server{
 private:
     thread t;
 public:
+    MySerialServer();
     void open(int port, ClientHandler* c);
     void stop();
-    static void clientListening(int port, ClientHandler* c);
+    void start(int port, ClientHandler* c);
 };
 
 

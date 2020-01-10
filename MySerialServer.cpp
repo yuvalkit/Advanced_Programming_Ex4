@@ -1,7 +1,7 @@
+////
+//// Created by giladby on 09/01/2020.
+////
 //
-// Created by giladby on 09/01/2020.
-//
-
 #include "MySerialServer.h"
 #include <iostream>
 #include <unistd.h>
@@ -10,15 +10,18 @@
 
 using namespace std;
 
-void MySerialServer::open(int port, ClientHandler* c) {
-    this->t = thread(clientListening, port, c);
-    this->t.join();
+MySerialServer::MySerialServer() {
+    this->toStop = false;
 }
 
-void MySerialServer::clientListening(int port, ClientHandler *c) {
+void MySerialServer::open(int port, ClientHandler* c) {
+    this->t = thread(&MySerialServer::start, this, port, c);
+    this->t.join();
+}
+void MySerialServer::start(int port, ClientHandler *c) {
     int clientSocket;
     struct timeval timeout{};
-    timeout.tv_sec = 2;
+    timeout.tv_sec = 120;
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
         //error
@@ -39,17 +42,26 @@ void MySerialServer::clientListening(int port, ClientHandler *c) {
         exit(1);
     }
     setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&timeout, sizeof timeout);
-    while (!MySerialServer::stopFlag) {
+    while (!this->toStop) {
+        struct sockaddr_in client;
+        socklen_t clilen = sizeof(client);
+        cout << "listening" << endl;
         // accept a client
-        clientSocket = accept(socketfd, (struct sockaddr *)&address, (socklen_t*)&address);
-        if (clientSocket == -1) {
+        clientSocket = accept(socketfd, (struct sockaddr *)&client, &clilen);
+        if (clientSocket < 0) {
+            if (errno == EWOULDBLOCK) {
+                cout << "timeout" << endl;
+            } else {
+                cout << "error with client socket" << endl;
+            }
+            this->stop();
             continue;
         }
+        cout << "client connected" << endl;
         c->handleClient(clientSocket);
     }
     close(socketfd);
 }
-
 void MySerialServer::stop() {
-    stopFlag = true;
+    toStop = true;
 }

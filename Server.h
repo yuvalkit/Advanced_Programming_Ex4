@@ -10,10 +10,10 @@
 namespace server_side {
     class Server {
     protected:
-        static bool stopFlag;
+        bool toStop;
     public:
-        virtual void open(int port, ClientHandler* c);
-        virtual void stop();
+        virtual void open(int port, ClientHandler* c) = 0;
+        virtual void stop() = 0;
     };
 }
 

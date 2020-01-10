@@ -19,44 +19,13 @@
 
 using namespace std;
 
-template <class Solution>
 class MyTestClientHandler : public ClientHandler {
 private:
-    Solver<string, Solution>* solver;
-    CacheManager <string, Solution>* cm;
+    Solver<string, string>* solver;
+    CacheManager <string, string>* cm;
 public:
-    MyTestClientHandler(Solver<string, Solution>* inputSolver, CacheManager <string, Solution>* inputCm) {
-        this->solver = inputSolver;
-        this->cm = inputCm;
-    }
-    void handleClient(int clientSocket) {
-        int isSent;
-        char buffer[1024] = {0};
-        vector<string> bufferVector;
-        vector<string> valuesVector;
-        string current;
-        Solution solution;
-        int data = read(clientSocket, buffer, 1024);
-        while (data != -1) {
-            current = buffer;
-            if(current == "end") {
-                break;
-            }
-            if(this->cm->isExist(current)) {
-                solution = this->cm->getSolution(current);
-            } else {
-                solution = this->solver->solve(current);
-                this->cm->saveSolution(current, solution);
-            }
-            isSent = send(clientSocket, solution, sizeof(solution), 0);
-            if(isSent == -1) {
-                cerr << "failed send message"<< endl;
-                exit(1);
-            }
-            buffer[1024] = {0};
-            data = read(clientSocket, buffer, 1024);
-        }
-    }
+    MyTestClientHandler(Solver<string, string>* inputSolver, CacheManager <string, string>* inputCm);
+    void handleClient(int clientSocket);
 };
 
 

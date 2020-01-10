@@ -35,9 +35,9 @@ protected:
     list<Entry<Problem, Solution>*> myList;
     bool enter;
 public:
-    virtual bool isExist(Problem p);
-    virtual Solution getSolution(Problem p);
-    virtual void saveSolution(Problem p, Solution s);
+    virtual bool isExist(Problem p) = 0;
+    virtual Solution getSolution(Problem p) = 0;
+    virtual void saveSolution(Problem p, Solution s) = 0;
 };
 
 

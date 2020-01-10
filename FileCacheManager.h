@@ -27,7 +27,7 @@ class FileCacheManager : public CacheManager<string, Solution>{
         if(this->myList.size() > (unsigned)this->maxSize) {
             auto temp = (this->myList.back());
             this->myList.remove(temp);
-            this->objMap.erase (temp->key);
+            this->objMap.erase (temp->problem);
             delete temp;
         }
     }
@@ -60,12 +60,10 @@ public:
 
     Solution getSolution(string problem) {
         fstream file_obj;
-        if(this->myList.empty()) {
-            cerr << "missing key"<< endl;
-            exit(1);
+        Solution object;
+        if(!this->myList.empty()) {
+            object = this->myList.back()->solution;
         }
-        Solution object = this->myList.back()->data;
-
         // the key doesn't exist in the cache - search it in files
         if(this->objMap.find(problem) == this->objMap.end()) {
             file_obj.open(problem, ios::in|ios::binary);
@@ -88,15 +86,13 @@ public:
             // update the list according the new entered value
             this->myList.remove((found->second));
             this->toTheTop((found->second));
-            return found->second->data;
+            return found->second->solution;
         }
     }
 
     void saveSolution(string problem, Solution solution) {
         fstream outfile;
-
         Solution object = solution;
-
         //writing the object to file
         outfile.open(problem, ios::out|ios::binary);
         if(!outfile.is_open()) {
@@ -105,9 +101,7 @@ public:
         }
         outfile.write((char *) &(object), sizeof(object));
         outfile.close();
-
         Entry<string, Solution>* e = new Entry<string, Solution>(problem,solution);
-
         //the key is already exist in the map - remove it from the list, preventing duplicate.
         if (this->objMap.find(problem) != this->objMap.end()) {
             auto found = this->objMap.find(problem);
