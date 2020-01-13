@@ -17,8 +17,8 @@ using namespace std;
 /**
  * FileCacheManager class
  */
-template <class Solution>
-class FileCacheManager : public CacheManager<string, Solution>{
+template <class Problem, class Solution>
+class FileCacheManager : public CacheManager<Problem, Solution> {
     /**
     * enter the value into the list, if reach to the limit - remove the least recently Used node.
     */
@@ -44,12 +44,13 @@ public:
         }
     }
 
-    bool isExist(string problem) {
+    bool isExist(Problem problem) {
+        string name = Problem::getString(problem);
         if(this->objMap.find(problem) != this->objMap.end()) {
             return true;
         }
         fstream file_obj;
-        file_obj.open(problem, ios::in|ios::binary);
+        file_obj.open(name, ios::in|ios::binary);
         // key is missing in files
         if (!file_obj.is_open()) {
             return false;
@@ -59,6 +60,7 @@ public:
     }
 
     Solution getSolution(string problem) {
+        string name = Problem::getString(problem);
         fstream file_obj;
         Solution object;
         if(!this->myList.empty()) {
@@ -66,14 +68,14 @@ public:
         }
         // the key doesn't exist in the cache - search it in files
         if(this->objMap.find(problem) == this->objMap.end()) {
-            file_obj.open(problem, ios::in|ios::binary);
+            file_obj.open(name, ios::in|ios::binary);
             // key is missing in files
             if (!file_obj.is_open()) {
                 cerr << "cannot open file"<< endl;
                 exit(1);
             } else {
                 file_obj.read((char *) &(object), sizeof(object));
-                Entry<string, Solution>* e = new Entry<string, Solution>(problem, object);
+                Entry<string, Solution>* e = new Entry<Problem, Solution>(problem, object);
                 // update the current value in the map
                 this->objMap[problem] = e;
                 // update the list according the current value
@@ -91,10 +93,11 @@ public:
     }
 
     void saveSolution(string problem, Solution solution) {
+        string name = Problem::getString(problem);
         fstream outfile;
         Solution object = solution;
         //writing the object to file
-        outfile.open(problem, ios::out|ios::binary);
+        outfile.open(name, ios::out|ios::binary);
         if(!outfile.is_open()) {
             cerr << "cannot open file"<< endl;
             exit(1);

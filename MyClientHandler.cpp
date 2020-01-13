@@ -7,46 +7,82 @@
 #include "Utils.h"
 #include "MatrixProblem.h"
 
-MyClientHandler::MyClientHandler(Solver<Searchable*, string> *inputSolver, CacheManager<string, string> *inputCm) {
+MyClientHandler::MyClientHandler(Solver<Searchable*, string> *inputSolver, CacheManager<Searchable*, string> *inputCm) {
     this->cm = inputCm;
     this->solver = inputSolver;
 }
 
 void MyClientHandler::handleClient(int clientSocket) {
-    int isSent;
+    int isSent, counterValid;
+    bool validFlag, finishFlag, newLineFlag;
+    char testChar;
     char buffer[1024] = {0};
     vector<string> bufferVector;
     vector<string> valuesVector;
-    string current,problem = "";
+    string current = "", str;
+    string problem = "";
     string solution;
     Searchable* searchable;
     char c;
     int data = read(clientSocket, buffer, 1024);
     while (data != -1) {
-        current = buffer;
-        c = current[current.size() - 1];
-        while (c == '\n' || c == '\r') {
-            current = current.substr(0, current.size() - 1);
-            c = current[current.size() - 1];
+        finishFlag = false;
+        newLineFlag = false;
+        validFlag = true;
+        current += Utils::removeSpaces((string) buffer);
+        if (current[current.size() - 1] == '\n') {
+            newLineFlag = true;
         }
-        if (current == "end") {
-            //remove last '$'
-            problem = problem.substr(0, problem.size() - 1);
+        bufferVector = Utils::split(current, "\n");
+        for (unsigned int j = 0; j < bufferVector.size(); j++) {
+            str = bufferVector[j];
+            counterValid = 0;
+            if(str == "") {
+                break;
+            }
+            //the last chunk get cut sometimes, and if so - run over the chunk and remove the bad characters.
+            if(j == bufferVector.size() - 1) {
+                if (!newLineFlag) {
+                    for(unsigned int i = 0; i < str.length(); i++) {
+                        testChar = str[i];
+                        if(isdigit(testChar) || testChar == '.' || testChar == ','|| testChar == '-') {
+                            counterValid++;
+                        } else {
+                            validFlag = false;
+                            break;
+                        }
+                    }
+                    if(!validFlag) {
+                        str = str.substr(0, counterValid);
+                    }
+                }
+                current = str;
+                if (str == "end") {
+                    finishFlag = true;
+                } else {
+                    if (newLineFlag) {
+                        valuesVector.emplace_back(str);
+                        current = "";
+                    }
+                }
+            } else {
+                valuesVector.emplace_back(str);
+            }
+        }
+        if (finishFlag) {
             break;
         }
-        current = Utils::removeSpaces(current);
-        problem += current + "$";
         for (int i = 0; i < 1024; i++) {
             buffer[i] = 0;
         }
         data = read(clientSocket, buffer, 1024);
     }
-    if(this->cm->isExist(problem)) {
-        solution = this->cm->getSolution(problem);
+    searchable = new MatrixProblem(valuesVector);
+    if(this->cm->isExist(searchable)) {
+        solution = this->cm->getSolution(searchable);
     } else {
-        searchable = new MatrixProblem(problem);
         solution = this->solver->solve(searchable);
-        this->cm->saveSolution(current, solution);
+        this->cm->saveSolution(searchable, solution);
     }
     isSent = send(clientSocket, solution.c_str(), solution.size(), 0);
     if(isSent == -1) {

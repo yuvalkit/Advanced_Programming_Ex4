@@ -7,13 +7,19 @@
 
 #include "Searchable.h"
 #include <string>
+#include <vector>
 
 using namespace std;
 
 class MatrixProblem : public Searchable {
-    string problem;
+    vector<string> problem;
+    string problemString;
+    string makeProblemString();
+
 public:
-    MatrixProblem(string inputProblem);
+    MatrixProblem(vector<string> inputProblem);
+    static string getString(MatrixProblem problem);
+    string getProblemString();
 };
 
 
