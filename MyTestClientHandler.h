@@ -16,15 +16,16 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include "Utils.h"
+#include "ReverseProblem.h"
 
 using namespace std;
 
 class MyTestClientHandler : public ClientHandler {
 private:
     Solver<string, string>* solver;
-    CacheManager <string, string>* cm;
+    CacheManager <ReverseProblem*, string>* cm;
 public:
-    MyTestClientHandler(Solver<string, string>* inputSolver, CacheManager <string, string>* inputCm);
+    MyTestClientHandler(Solver<string, string>* inputSolver, CacheManager <ReverseProblem*, string>* inputCm);
     void handleClient(int clientSocket);
 };
 

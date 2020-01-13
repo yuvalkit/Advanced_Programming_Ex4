@@ -62,7 +62,6 @@ void MyClientHandler::handleClient(int clientSocket) {
                 } else {
                     if (newLineFlag) {
                         valuesVector.emplace_back(str);
-                        current = "";
                     }
                 }
             } else {
@@ -71,6 +70,9 @@ void MyClientHandler::handleClient(int clientSocket) {
         }
         if (finishFlag) {
             break;
+        }
+        if(newLineFlag) {
+            current = "";
         }
         for (int i = 0; i < 1024; i++) {
             buffer[i] = 0;

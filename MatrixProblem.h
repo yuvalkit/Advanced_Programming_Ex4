@@ -18,8 +18,7 @@ class MatrixProblem : public Searchable {
 
 public:
     MatrixProblem(vector<string> inputProblem);
-    static string getString(MatrixProblem problem);
-    string getProblemString();
+    string getString();
 };
 
 

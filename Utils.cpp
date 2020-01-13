@@ -15,7 +15,9 @@ vector<string> Utils::split(string str, const string &delimiter) {
         str.erase(0, pos + delimiter.length());
         pos = str.find(delimiter);
     }
-    strings.emplace_back(str);
+    if(str != "") {
+        strings.emplace_back(str);
+    }
     return strings;
 }
 

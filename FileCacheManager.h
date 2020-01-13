@@ -22,7 +22,7 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
     /**
     * enter the value into the list, if reach to the limit - remove the least recently Used node.
     */
-    void toTheTop(Entry<string, Solution>* e) {
+    void toTheTop(Entry<Problem, Solution>* e) {
         this->myList.push_front(e);
         if(this->myList.size() > (unsigned)this->maxSize) {
             auto temp = (this->myList.back());
@@ -45,7 +45,7 @@ public:
     }
 
     bool isExist(Problem problem) {
-        string name = Problem::getString(problem);
+        string name = problem->getString();
         if(this->objMap.find(problem) != this->objMap.end()) {
             return true;
         }
@@ -59,8 +59,8 @@ public:
         return true;
     }
 
-    Solution getSolution(string problem) {
-        string name = Problem::getString(problem);
+    Solution getSolution(Problem problem) {
+        string name = problem->getString();
         fstream file_obj;
         Solution object;
         if(!this->myList.empty()) {
@@ -75,7 +75,7 @@ public:
                 exit(1);
             } else {
                 file_obj.read((char *) &(object), sizeof(object));
-                Entry<string, Solution>* e = new Entry<Problem, Solution>(problem, object);
+                Entry<Problem, Solution>* e = new Entry<Problem, Solution>(problem, object);
                 // update the current value in the map
                 this->objMap[problem] = e;
                 // update the list according the current value
@@ -92,8 +92,9 @@ public:
         }
     }
 
-    void saveSolution(string problem, Solution solution) {
-        string name = Problem::getString(problem);
+
+    void saveSolution(Problem problem, Solution solution) {
+        string name = problem->getString();
         fstream outfile;
         Solution object = solution;
         //writing the object to file
@@ -104,7 +105,7 @@ public:
         }
         outfile.write((char *) &(object), sizeof(object));
         outfile.close();
-        Entry<string, Solution>* e = new Entry<string, Solution>(problem,solution);
+        Entry<Problem, Solution>* e = new Entry<Problem, Solution>(problem,solution);
         //the key is already exist in the map - remove it from the list, preventing duplicate.
         if (this->objMap.find(problem) != this->objMap.end()) {
             auto found = this->objMap.find(problem);

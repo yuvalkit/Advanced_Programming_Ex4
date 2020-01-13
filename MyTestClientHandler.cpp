@@ -4,7 +4,7 @@
 
 #include "MyTestClientHandler.h"
 
-MyTestClientHandler::MyTestClientHandler(Solver<string, string> *inputSolver, CacheManager<string, string> *inputCm)  {
+MyTestClientHandler::MyTestClientHandler(Solver<string, string> *inputSolver, CacheManager<ReverseProblem*, string> *inputCm)  {
     this->solver = inputSolver;
     this->cm = inputCm;
 }
@@ -28,11 +28,12 @@ void MyTestClientHandler::handleClient(int clientSocket) {
         if(current == "end") {
             break;
         }
-        if(this->cm->isExist(current)) {
-            solution = this->cm->getSolution(current);
+        ReverseProblem* rp = new ReverseProblem(current);
+        if(this->cm->isExist(rp)) {
+            solution = this->cm->getSolution(rp);
         } else {
-            solution = this->solver->solve(current);
-            this->cm->saveSolution(current, solution);
+            solution = this->solver->solve(rp->getString());
+            this->cm->saveSolution(rp, solution);
         }
         isSent = send(clientSocket, solution.c_str(), solution.size(), 0);
         if(isSent == -1) {

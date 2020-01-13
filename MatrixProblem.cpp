@@ -20,12 +20,8 @@ string MatrixProblem::makeProblemString() {
     return str;
 }
 
-string MatrixProblem::getProblemString() {
-    return this->problemString;
-}
-
-string MatrixProblem::getString(MatrixProblem problem) {
+string MatrixProblem::getString() {
     hash<string> hasher;
-    auto hashed = hasher(problem.getProblemString());
+    auto hashed = hasher(this->problemString);
     return to_string(hashed);
 }

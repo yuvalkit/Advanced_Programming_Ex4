@@ -12,13 +12,23 @@
 #include "Server.h"
 #include "StringReverser.h"
 #include "MySerialServer.h"
+#include "Searchable.h"
+#include "MyClientHandler.h"
+#include "SearchSolver.h"
 
 namespace boot {
     class Main {
     public:
         int main1(int argc, char** argv) {
-            CacheManager<string, string>* cm = new FileCacheManager<string>(5);
-            Solver<string, string>* s = new StringReverser();
+//            CacheManager<Searchable*, string>* cm = new FileCacheManager<Searchable*, string>(5);
+//            Solver<Searchable*, string>* s = new SearchSolver<string>();
+//            ClientHandler* c = new MyClientHandler(s, cm);
+//            server_side::Server* server = new MySerialServer();
+
+
+
+            CacheManager<ReverseProblem* , string>* cm = new FileCacheManager<ReverseProblem* , string>(5);
+            Solver<string , string>* s = new StringReverser();
             ClientHandler* c = new MyTestClientHandler(s, cm);
             server_side::Server* server = new MySerialServer();
             if(argc >= 2) {
