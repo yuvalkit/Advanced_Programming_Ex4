@@ -4,6 +4,7 @@
 
 #include "MatrixProblem.h"
 #include "Utils.h"
+#include <limits>
 
 MatrixProblem::MatrixProblem(vector<string> inputProblem) {
     this->problemVector = inputProblem;
@@ -24,6 +25,7 @@ string MatrixProblem::makeProblemString() {
 
 void MatrixProblem::makeMatrix() {
     vector<string> cells;
+    int infinity = numeric_limits<int>::max();
     int size = this->problemVector.size();
     this->rows = this->problemVector.size() - 2;
     for (int i = 0; i < size; i++) {
@@ -39,17 +41,18 @@ void MatrixProblem::makeMatrix() {
                 }
             }
             for (int j = 0; j < cells.size(); j++) {
-                this->matrix[i][j] = new Node(i, j, strtod(cells[j].c_str(), NULL));
+                this->matrix[i][j] = new State<Node*>(new Node(i, j, strtod(cells[j].c_str(), NULL)), infinity, NULL);
             }
         } else if (i == size - 2) {
             int row = strtod(cells[0].c_str(), NULL);
             int col = strtod(cells[1].c_str(), NULL);
-            this->initialState = new State<Node*>(this->matrix[row][col], this->matrix[row][col]->getCost(), NULL);
+            this->matrix[row][col]->setSum(this->matrix[row][col]->getState()->getCost());
+            this->initialState = this->matrix[row][col];
         // i == size - 1
         } else {
             int row = strtod(cells[0].c_str(), NULL);
             int col = strtod(cells[1].c_str(), NULL);
-            this->goalStates.emplace_back(new State<Node*>(this->matrix[row][col], this->matrix[row][col]->getCost(), NULL));
+            this->goalStates.emplace_back(this->matrix[row][col]);
         }
     }
 }
@@ -57,7 +60,7 @@ void MatrixProblem::makeMatrix() {
 void MatrixProblem::printMatrix() {
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->cols; j++) {
-            cout << this->matrix[i][j]->getCost();
+            cout << this->matrix[i][j]->getState()->getCost();
             if (j != this->cols - 1) {
                 cout << ",";
             }
@@ -67,9 +70,9 @@ void MatrixProblem::printMatrix() {
 }
 
 void MatrixProblem::initMatrix() {
-    this->matrix = new Node**[this->rows];
+    this->matrix = new State<Node*>**[this->rows];
     for (int i = 0; i < this->rows; i++) {
-        this->matrix[i] = new Node*[this->cols];
+        this->matrix[i] = new State<Node*>*[this->cols];
     }
 }
 
@@ -98,7 +101,6 @@ vector<State<Node *> *> * MatrixProblem::getAllPossibleStates(State<Node *> *sta
     int j = state->getState()->getJ();
     int cost = state->getState()->getCost();
     bool isTop = false, isDown = false, isRight = false, isLeft = false;
-    State<Node*>* newState;
     if(i == 0)  {
         isTop = true;
     }
@@ -111,51 +113,49 @@ vector<State<Node *> *> * MatrixProblem::getAllPossibleStates(State<Node *> *sta
     if(j == this->cols - 1) {
         isRight = true;
     }
-    if(!isTop && this->matrix[i - 1][j]->getCost() != -1) {
+    if(!isTop && this->matrix[i - 1][j]->getState()->getCost() != -1) {
         // make up
-        newState = new State<Node*>(this->matrix[i - 1][j], this->matrix[i - 1][j]->getCost() + state->getSum(), state);
-        result->emplace_back(newState);
+        this->matrix[i - 1][j]->setCameFrom(state);
+        result->emplace_back(this->matrix[i - 1][j]);
     }
-    if(!isDown && this->matrix[i + 1][j]->getCost() != -1) {
+    if(!isDown && this->matrix[i + 1][j]->getState()->getCost() != -1) {
         // make down
-        newState = new State<Node*>(this->matrix[i + 1][j], this->matrix[i + 1][j]->getCost() + state->getSum(), state);
-        result->emplace_back(newState);
+        this->matrix[i + 1][j]->setCameFrom(state);
+        result->emplace_back(this->matrix[i + 1][j]);
     }
-    if(!isRight && this->matrix[i][j + 1]->getCost() != -1) {
+    if(!isRight && this->matrix[i][j + 1]->getState()->getCost() != -1) {
         // make right
-        newState = new State<Node*>(this->matrix[i][j + 1], this->matrix[i][j + 1]->getCost() + state->getSum(), state);
-        result->emplace_back(newState);
+        this->matrix[i][j + 1]->setCameFrom(state);
+        result->emplace_back(this->matrix[i][j + 1]);
     }
-    if(!isLeft && this->matrix[i][j - 1]->getCost() != -1) {
+    if(!isLeft && this->matrix[i][j - 1]->getState()->getCost() != -1) {
         // make left
-        newState = new State<Node*>(this->matrix[i][j - 1], this->matrix[i][j - 1]->getCost() + state->getSum(), state);
-        result->emplace_back(newState);
+        this->matrix[i][j - 1]->setCameFrom(state);
+        result->emplace_back(this->matrix[i][j - 1]);
     }
     return result;
 }
 
-string MatrixProblem::getPath(vector<Node *> nodesVector) {
+string MatrixProblem::getPath(vector<State<Node *>*> statesVector) {
     string result = "";
-    int size = nodesVector.size();
-    Node* prev = nodesVector[size - 1];
-    Node* curr;
-    int sum = prev->getCost();
+    int size = statesVector.size();
+    State<Node*>* prev = statesVector[size - 1];
+    State<Node*>* curr;
     for (int i = size - 2; i >= 0; i--) {
         if (i != size - 2) {
             result += ", ";
         }
-        curr = nodesVector[i];
-        if (prev->getI() > curr->getI()) {
+        curr = statesVector[i];
+        if (prev->getState()->getI() > curr->getState()->getI()) {
             result += "Up";
-        } else if (prev->getI() < curr->getI()) {
+        } else if (prev->getState()->getI() < curr->getState()->getI()) {
             result += "Down";
-        } else if (prev->getJ() > curr->getJ()) {
+        } else if (prev->getState()->getJ() > curr->getState()->getJ()) {
             result += "Left";
         } else {
             result += "Right";
         }
-        sum += curr->getCost();
-        result += " (" + to_string(sum) + ")";
+        result += " (" + to_string(curr->getSum()) + ")";
     }
     return result;
 }

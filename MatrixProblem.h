@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "Node.h"
+#include "State.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ class MatrixProblem : public Searchable<Node*> {
     string problemString;
     int rows;
     int cols;
-    Node*** matrix;
+    State<Node*>*** matrix;
     string makeProblemString();
     void initMatrix();
 public:
@@ -28,7 +29,7 @@ public:
     vector<State<Node*>*>* getAllPossibleStates(State<Node*>* state);
     void makeMatrix();
     void printMatrix();
-    static string getPath(vector<Node*> nodesVector);
+    static string getPath(vector<State<Node*>*> statesVector);
 };
 
 

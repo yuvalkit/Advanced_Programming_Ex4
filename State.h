@@ -28,6 +28,12 @@ public:
     int getSum() {
         return this->sum;
     }
+    State<T>* getCameFrom() {
+        return this->cameFrom;
+    }
+    void setCameFrom(State<T>* newCameFrom) {
+        this->cameFrom = newCameFrom;
+    }
 };
 
 

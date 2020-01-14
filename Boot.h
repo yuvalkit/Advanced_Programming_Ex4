@@ -22,7 +22,7 @@ namespace boot {
     public:
         int main1(int argc, char** argv) {
             CacheManager<Searchable<Node*>*, string>* cm = new FileCacheManager<Searchable<Node*>*, string>(5);
-            Solver<Searchable<Node*>*, vector<Node*>>* s = new SearchSolver<vector<Node*>>();
+            Solver<Searchable<Node*>*, vector<State<Node*>*>>* s = new SearchSolver<vector<State<Node*>*>>();
             ClientHandler* c = new MyClientHandler(s, cm);
             server_side::Server* server = new MySerialServer();
 
