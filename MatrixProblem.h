@@ -26,7 +26,7 @@ public:
     string getString();
     bool isGoalState(State<Node*>* state);
     State<Node*>* getInitialState();
-    vector<State<Node*>*>* getAllPossibleStates(State<Node*>* state);
+    vector<State<Node*>*> getAllPossibleStates(State<Node*>* state);
     void makeMatrix();
     void printMatrix();
     static string getPath(vector<State<Node*>*> statesVector);

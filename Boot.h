@@ -10,6 +10,8 @@
 #include "FileCacheManager.h"
 #include "Solver.h"
 #include "Node.h"
+#include "BestFirstSearch.h"
+#include "Searcher.h"
 #include "Server.h"
 #include "StringReverser.h"
 #include "MySerialServer.h"
@@ -22,7 +24,8 @@ namespace boot {
     public:
         int main1(int argc, char** argv) {
             CacheManager<Searchable<Node*>*, string>* cm = new FileCacheManager<Searchable<Node*>*, string>(5);
-            Solver<Searchable<Node*>*, vector<State<Node*>*>>* s = new SearchSolver<vector<State<Node*>*>>();
+            Searcher<Node*>* searcher = new BestFirstSearch<Node*>();
+            Solver<Searchable<Node*>*, vector<State<Node*>*>>* s = new SearchSolver<Node*>(searcher);
             ClientHandler* c = new MyClientHandler(s, cm);
             server_side::Server* server = new MySerialServer();
 

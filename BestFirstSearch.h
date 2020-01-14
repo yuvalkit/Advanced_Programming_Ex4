@@ -21,14 +21,16 @@ public:
             n = this->popOpen();
             this->closed.insert(n);
             if(searchable->isGoalState(n)) {
-                return this->getBackTrace();
+                return this->getBackTrace(n);
             }
             successors = searchable->getAllPossibleStates(n);
             for (State<T>* s : successors) {
                 if(this->closed.find(s) == this->closed.end() && !this->isOpenContains(s)) {
+                    s->setCameFrom(n);
                     s->setSum(s->getState()->getCost() + n->getSum());
                     this->open.push(s);
                 } else if(s->getSum() > s->getState()->getCost() + n->getSum()) {
+                    s->setCameFrom(n);
                     s->setSum(s->getState()->getCost() + n->getSum());
                     if(!this->isOpenContains(s)) {
                         this->open.push(s);

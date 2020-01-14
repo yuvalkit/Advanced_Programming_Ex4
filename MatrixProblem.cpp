@@ -95,8 +95,8 @@ State<Node *> * MatrixProblem::getInitialState() {
     return this->initialState;
 }
 
-vector<State<Node *> *> * MatrixProblem::getAllPossibleStates(State<Node *> *state) {
-    vector<State<Node *> *> * result = NULL;
+vector<State<Node *> *> MatrixProblem::getAllPossibleStates(State<Node *> *state) {
+    vector<State<Node *> *> result;
     int i = state->getState()->getI();
     int j = state->getState()->getJ();
     int cost = state->getState()->getCost();
@@ -115,23 +115,23 @@ vector<State<Node *> *> * MatrixProblem::getAllPossibleStates(State<Node *> *sta
     }
     if(!isTop && this->matrix[i - 1][j]->getState()->getCost() != -1) {
         // make up
-        this->matrix[i - 1][j]->setCameFrom(state);
-        result->emplace_back(this->matrix[i - 1][j]);
+        //this->matrix[i - 1][j]->setCameFrom(state);
+        result.emplace_back(this->matrix[i - 1][j]);
     }
     if(!isDown && this->matrix[i + 1][j]->getState()->getCost() != -1) {
         // make down
-        this->matrix[i + 1][j]->setCameFrom(state);
-        result->emplace_back(this->matrix[i + 1][j]);
+        //this->matrix[i + 1][j]->setCameFrom(state);
+        result.emplace_back(this->matrix[i + 1][j]);
     }
     if(!isRight && this->matrix[i][j + 1]->getState()->getCost() != -1) {
         // make right
-        this->matrix[i][j + 1]->setCameFrom(state);
-        result->emplace_back(this->matrix[i][j + 1]);
+        //this->matrix[i][j + 1]->setCameFrom(state);
+        result.emplace_back(this->matrix[i][j + 1]);
     }
     if(!isLeft && this->matrix[i][j - 1]->getState()->getCost() != -1) {
         // make left
-        this->matrix[i][j - 1]->setCameFrom(state);
-        result->emplace_back(this->matrix[i][j - 1]);
+        //this->matrix[i][j - 1]->setCameFrom(state);
+        result.emplace_back(this->matrix[i][j - 1]);
     }
     return result;
 }
@@ -156,6 +156,7 @@ string MatrixProblem::getPath(vector<State<Node *>*> statesVector) {
             result += "Right";
         }
         result += " (" + to_string(curr->getSum()) + ")";
+        prev = curr;
     }
     return result;
 }

@@ -20,7 +20,7 @@ public:
     virtual string getString() = 0;
     virtual bool isGoalState(State<T>* state) = 0;
     virtual State<T>* getInitialState() = 0;
-    virtual vector<State<T>*>* getAllPossibleStates(State<T>* state) = 0;
+    virtual vector<State<T>*> getAllPossibleStates(State<T>* state) = 0;
 };
 
 #endif //ADVANCED_PROGRAMMING_EX4_SEARCHABLE_H
