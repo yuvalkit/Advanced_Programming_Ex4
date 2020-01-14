@@ -21,3 +21,7 @@ int Node::getJ() {
 int Node::getCost() {
     return this->cost;
 }
+
+bool Node::isEqual(Node *node) {
+    return this->i == node->getI() && this->j == node->getJ() && this->cost == node->getCost();
+}

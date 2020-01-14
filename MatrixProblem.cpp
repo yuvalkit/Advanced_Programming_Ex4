@@ -44,12 +44,12 @@ void MatrixProblem::makeMatrix() {
         } else if (i == size - 2) {
             int row = strtod(cells[0].c_str(), NULL);
             int col = strtod(cells[1].c_str(), NULL);
-            this->initialState = new State<Node*>(this->matrix[row][col]);
+            this->initialState = new State<Node*>(this->matrix[row][col], this->matrix[row][col]->getCost(), NULL);
         // i == size - 1
         } else {
             int row = strtod(cells[0].c_str(), NULL);
             int col = strtod(cells[1].c_str(), NULL);
-            this->goalStates.emplace_back(new State<Node*>(this->matrix[row][col]));
+            this->goalStates.emplace_back(new State<Node*>(this->matrix[row][col], this->matrix[row][col]->getCost(), NULL));
         }
     }
 }
@@ -80,13 +80,56 @@ string MatrixProblem::getString() {
 }
 
 bool MatrixProblem::isGoalState(State<Node*> *state) {
-
+    for(State<Node*>* current : this->goalStates) {
+        if(current->isEqual(state)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 State<Node *> * MatrixProblem::getInitialState() {
-
+    return this->initialState;
 }
 
-list<State<Node *> *> * MatrixProblem::getAllPossibleStates(State<Node *> *state) {
-
+vector<State<Node *> *> * MatrixProblem::getAllPossibleStates(State<Node *> *state) {
+    vector<State<Node *> *> * result = NULL;
+    int i = state->getState()->getI();
+    int j = state->getState()->getJ();
+    int cost = state->getState()->getCost();
+    bool isTop = false, isDown = false, isRight = false, isLeft = false;
+    State<Node*>* newState;
+    if(i == 0)  {
+        isTop = true;
+    }
+    if(i == this->rows - 1) {
+        isDown = true;
+    }
+    if(j == 0)  {
+        isLeft = true;
+    }
+    if(j == this->cols - 1) {
+        isRight = true;
+    }
+    if(!isTop && this->matrix[i - 1][j]->getCost() != -1) {
+        // make up
+        newState = new State<Node*>(this->matrix[i - 1][j], this->matrix[i - 1][j]->getCost() + state->getSum(), state);
+        result->emplace_back(newState);
+    }
+    if(!isDown && this->matrix[i + 1][j]->getCost() != -1) {
+        // make down
+        newState = new State<Node*>(this->matrix[i + 1][j], this->matrix[i + 1][j]->getCost() + state->getSum(), state);
+        result->emplace_back(newState);
+    }
+    if(!isRight && this->matrix[i][j + 1]->getCost() != -1) {
+        // make right
+        newState = new State<Node*>(this->matrix[i][j + 1], this->matrix[i][j + 1]->getCost() + state->getSum(), state);
+        result->emplace_back(newState);
+    }
+    if(!isLeft && this->matrix[i][j - 1]->getCost() != -1) {
+        // make left
+        newState = new State<Node*>(this->matrix[i][j - 1], this->matrix[i][j - 1]->getCost() + state->getSum(), state);
+        result->emplace_back(newState);
+    }
+    return result;
 }

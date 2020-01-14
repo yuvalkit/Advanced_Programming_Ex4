@@ -16,6 +16,7 @@ public:
     int getI();
     int getJ();
     int getCost();
+    bool isEqual(Node* node);
 };
 
 

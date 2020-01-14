@@ -80,9 +80,6 @@ void MyClientHandler::handleClient(int clientSocket) {
         data = read(clientSocket, buffer, 1024);
     }
     searchable = new MatrixProblem(valuesVector);
-    MatrixProblem* m = new MatrixProblem(valuesVector);
-    m->printMatrix();
-    exit(1);
     if(this->cm->isExist(searchable)) {
         solution = this->cm->getSolution(searchable);
     } else {
