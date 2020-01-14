@@ -10,11 +10,13 @@ class State {
     T state;
     int sum;
     State<T>* cameFrom;
+    char color;
 public:
-    State<T>(T inputState, int inputSum, State<T>* inputCameFrom) {
+    State<T>(T inputState) {
         this->state = inputState;
-        this->cameFrom = inputCameFrom;
-        this->sum = inputSum;
+        this->cameFrom = NULL;
+        this->sum = 0;
+        this->color = 'W';
     }
     T getState() {
         return this->state;
@@ -33,6 +35,12 @@ public:
     }
     void setCameFrom(State<T>* newCameFrom) {
         this->cameFrom = newCameFrom;
+    }
+    char getColor() {
+        return this->color;
+    }
+    void setColor(char c) {
+        this->color = c;
     }
 };
 

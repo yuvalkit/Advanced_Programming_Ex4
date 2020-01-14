@@ -5,6 +5,7 @@
 #ifndef ADVANCED_PROGRAMMING_EX4_NODE_H
 #define ADVANCED_PROGRAMMING_EX4_NODE_H
 
+using namespace std;
 
 class Node {
 private:

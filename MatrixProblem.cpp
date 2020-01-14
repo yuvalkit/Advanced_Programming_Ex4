@@ -41,12 +41,11 @@ void MatrixProblem::makeMatrix() {
                 }
             }
             for (int j = 0; j < cells.size(); j++) {
-                this->matrix[i][j] = new State<Node*>(new Node(i, j, strtod(cells[j].c_str(), NULL)), infinity, NULL);
+                this->matrix[i][j] = new State<Node*>(new Node(i, j, strtod(cells[j].c_str(), NULL)));
             }
         } else if (i == size - 2) {
             int row = strtod(cells[0].c_str(), NULL);
             int col = strtod(cells[1].c_str(), NULL);
-            this->matrix[row][col]->setSum(this->matrix[row][col]->getState()->getCost());
             this->initialState = this->matrix[row][col];
         // i == size - 1
         } else {

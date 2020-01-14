@@ -15,8 +15,9 @@ public:
     BestFirstSearch() : AbstractSearcher<T>() {}
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
-        State<T>* n;
-        this->open.push(searchable->getInitialState());
+        State<T>* n = searchable->getInitialState();
+        this->open.push(n);
+        n->setSum(n->getState()->getCost());
         while (this->open.size() != 0) {
             n = this->popOpen();
             this->closed.insert(n);
