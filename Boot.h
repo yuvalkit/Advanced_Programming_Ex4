@@ -18,13 +18,14 @@
 #include "Searchable.h"
 #include "MyClientHandler.h"
 #include "SearchSolver.h"
+#include "BreadthFirstSearch.h"
 
 namespace boot {
     class Main {
     public:
         int main1(int argc, char** argv) {
             CacheManager<Searchable<Node*>*, string>* cm = new FileCacheManager<Searchable<Node*>*, string>(5);
-            Searcher<Node*>* searcher = new BestFirstSearch<Node*>();
+            Searcher<Node*>* searcher = new BreadthFirstSearch<Node*>();
             Solver<Searchable<Node*>*, vector<State<Node*>*>>* s = new SearchSolver<Node*>(searcher);
             ClientHandler* c = new MyClientHandler(s, cm);
             server_side::Server* server = new MySerialServer();

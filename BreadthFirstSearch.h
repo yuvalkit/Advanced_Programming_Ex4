@@ -21,7 +21,7 @@ class BreadthFirstSearch : public AbstractSearcher<T>{
             for (State<T>* s : successors) {
                 if(s->getColor() == 'W') {
                     s->setColor('G');
-                    s->getState()->setSum(n->getSum() + 1);
+                    s->setSum(n->getSum() + 1);
                     s->setCameFrom(n);
                     this->open.push(s);
                 }
