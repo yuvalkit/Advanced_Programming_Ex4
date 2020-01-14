@@ -12,14 +12,22 @@
 
 using namespace std;
 
-class MatrixProblem : public Searchable {
-    vector<string> problem;
+class MatrixProblem : public Searchable<Node*> {
+    vector<string> problemVector;
     string problemString;
+    int rows;
+    int cols;
+    Node*** matrix;
     string makeProblemString();
-    vector<vector<Node*>> matrix;
+    void initMatrix();
 public:
     MatrixProblem(vector<string> inputProblem);
     string getString();
+    bool isGoalState(State<Node*>* state);
+    State<Node*>* getInitialState();
+    list<State<Node*>*>* getAllPossibleStates(State<Node*>* state);
+    void makeMatrix();
+    void printMatrix();
 };
 
 

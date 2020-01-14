@@ -7,7 +7,7 @@
 #include "Utils.h"
 #include "MatrixProblem.h"
 
-MyClientHandler::MyClientHandler(Solver<Searchable*, string> *inputSolver, CacheManager<Searchable*, string> *inputCm) {
+MyClientHandler::MyClientHandler(Solver<Searchable<Node*>*, string> *inputSolver, CacheManager<Searchable<Node*>*, string> *inputCm) {
     this->cm = inputCm;
     this->solver = inputSolver;
 }
@@ -22,7 +22,7 @@ void MyClientHandler::handleClient(int clientSocket) {
     string current = "", str;
     string problem = "";
     string solution;
-    Searchable* searchable;
+    Searchable<Node*>* searchable;
     char c;
     int data = read(clientSocket, buffer, 1024);
     while (data != -1) {
@@ -80,6 +80,9 @@ void MyClientHandler::handleClient(int clientSocket) {
         data = read(clientSocket, buffer, 1024);
     }
     searchable = new MatrixProblem(valuesVector);
+    MatrixProblem* m = new MatrixProblem(valuesVector);
+    m->printMatrix();
+    exit(1);
     if(this->cm->isExist(searchable)) {
         solution = this->cm->getSolution(searchable);
     } else {

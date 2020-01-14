@@ -6,12 +6,13 @@
 #define ADVANCED_PROGRAMMING_EX4_SEARCHSOLVER_H
 
 #include "Solver.h"
+#include "Node.h"
 #include "Searchable.h"
 
 template <class Solution>
-class SearchSolver : public Solver<Searchable*, Solution> {
+class SearchSolver : public Solver<Searchable<Node*>*, Solution> {
 public:
-    Solution solve(Searchable* searchable) {
+    Solution solve(Searchable<Node*>* searchable) {
         Solution s;
         return s;
     }

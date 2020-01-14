@@ -12,16 +12,17 @@
 #include <iostream>
 #include "CacheManager.h"
 #include "Searchable.h"
+#include "Node.h"
 
 using namespace std;
 
 class MyClientHandler : public ClientHandler {
 private:
-    Solver<Searchable*, string>* solver;
-    CacheManager<Searchable*, string>* cm;
+    Solver<Searchable<Node*>*, string>* solver;
+    CacheManager<Searchable<Node*>*, string>* cm;
 public:
     void handleClient(int clientSocket);
-    MyClientHandler(Solver<Searchable*, string>* inputSolver, CacheManager <Searchable*, string>* inputCm);
+    MyClientHandler(Solver<Searchable<Node*>*, string>* inputSolver, CacheManager <Searchable<Node*>*, string>* inputCm);
 };
 
 
