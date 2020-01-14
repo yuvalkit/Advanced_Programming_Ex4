@@ -133,3 +133,29 @@ vector<State<Node *> *> * MatrixProblem::getAllPossibleStates(State<Node *> *sta
     }
     return result;
 }
+
+string MatrixProblem::getPath(vector<Node *> nodesVector) {
+    string result = "";
+    int size = nodesVector.size();
+    Node* prev = nodesVector[size - 1];
+    Node* curr;
+    int sum = prev->getCost();
+    for (int i = size - 2; i >= 0; i--) {
+        if (i != size - 2) {
+            result += ", ";
+        }
+        curr = nodesVector[i];
+        if (prev->getI() > curr->getI()) {
+            result += "Up";
+        } else if (prev->getI() < curr->getI()) {
+            result += "Down";
+        } else if (prev->getJ() > curr->getJ()) {
+            result += "Left";
+        } else {
+            result += "Right";
+        }
+        sum += curr->getCost();
+        result += " (" + to_string(sum) + ")";
+    }
+    return result;
+}

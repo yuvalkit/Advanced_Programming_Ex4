@@ -18,11 +18,11 @@ using namespace std;
 
 class MyClientHandler : public ClientHandler {
 private:
-    Solver<Searchable<Node*>*, string>* solver;
+    Solver<Searchable<Node*>*, vector<Node*>>* solver;
     CacheManager<Searchable<Node*>*, string>* cm;
 public:
     void handleClient(int clientSocket);
-    MyClientHandler(Solver<Searchable<Node*>*, string>* inputSolver, CacheManager <Searchable<Node*>*, string>* inputCm);
+    MyClientHandler(Solver<Searchable<Node*>*, vector<Node*>>* inputSolver, CacheManager <Searchable<Node*>*, string>* inputCm);
 };
 
 

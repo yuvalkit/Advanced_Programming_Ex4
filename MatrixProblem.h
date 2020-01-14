@@ -28,6 +28,7 @@ public:
     vector<State<Node*>*>* getAllPossibleStates(State<Node*>* state);
     void makeMatrix();
     void printMatrix();
+    static string getPath(vector<Node*> nodesVector);
 };
 
 

@@ -7,7 +7,7 @@
 #include "Utils.h"
 #include "MatrixProblem.h"
 
-MyClientHandler::MyClientHandler(Solver<Searchable<Node*>*, string> *inputSolver, CacheManager<Searchable<Node*>*, string> *inputCm) {
+MyClientHandler::MyClientHandler(Solver<Searchable<Node*>*, vector<Node*>> *inputSolver, CacheManager<Searchable<Node*>*, string> *inputCm) {
     this->cm = inputCm;
     this->solver = inputSolver;
 }
@@ -22,6 +22,7 @@ void MyClientHandler::handleClient(int clientSocket) {
     string current = "", str;
     string problem = "";
     string solution;
+    vector<Node*> solutionVector;
     Searchable<Node*>* searchable;
     char c;
     int data = read(clientSocket, buffer, 1024);
@@ -83,7 +84,8 @@ void MyClientHandler::handleClient(int clientSocket) {
     if(this->cm->isExist(searchable)) {
         solution = this->cm->getSolution(searchable);
     } else {
-        solution = this->solver->solve(searchable);
+        solutionVector = this->solver->solve(searchable);
+        solution = MatrixProblem::getPath(solutionVector);
         this->cm->saveSolution(searchable, solution);
     }
     isSent = send(clientSocket, solution.c_str(), solution.size(), 0);
