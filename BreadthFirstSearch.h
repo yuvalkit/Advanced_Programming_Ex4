@@ -17,6 +17,9 @@ class BreadthFirstSearch : public AbstractSearcher<T>{
         n->setColor('G');
         while (this->open.size() != 0) {
             n = this->popOpen();
+            if(searchable->isGoalState(n)) {
+                return this->getBackTrace(n);
+            }
             successors = searchable->getAllPossibleStates(n);
             for (State<T>* s : successors) {
                 if(s->getColor() == 'W') {
@@ -24,9 +27,6 @@ class BreadthFirstSearch : public AbstractSearcher<T>{
                     s->setSum(n->getSum() + 1);
                     s->setCameFrom(n);
                     this->open.push(s);
-                    if(searchable->isGoalState(s)) {
-                        return this->getBackTrace(s);
-                    }
                 }
             }
             n->setColor('B');
