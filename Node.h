@@ -7,7 +7,15 @@
 
 
 class Node {
-
+private:
+    int i;
+    int j;
+    int cost;
+public:
+    Node(int inputI, int inputJ, int inputCost);
+    int getI();
+    int getJ();
+    int getCost();
 };
 
 
