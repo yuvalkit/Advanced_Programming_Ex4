@@ -8,6 +8,7 @@
 #include "Searchable.h"
 #include <string>
 #include <vector>
+#include "Node.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ class MatrixProblem : public Searchable {
     vector<string> problem;
     string problemString;
     string makeProblemString();
-
+    vector<vector<Node*>> matrix;
 public:
     MatrixProblem(vector<string> inputProblem);
     string getString();
