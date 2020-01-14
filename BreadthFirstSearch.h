@@ -28,6 +28,7 @@ class BreadthFirstSearch : public AbstractSearcher<T>{
             }
             n->setColor('B');
         }
+        return this->getBackTrace(n);
     }
 };
 
