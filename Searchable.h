@@ -14,9 +14,12 @@ using namespace std;
 template <class T>
 class Searchable {
     list<State<T>*> goalStates;
+    State<T> initialeState;
 public:
     virtual string getString() = 0;
-    bool isGoalState(State<T> )
+    virtual bool isGoalState(State<T>* state) = 0;
+    virtual State<T>* getInitialeState() = 0;
+    virtual list<State<T>*>* getAllPossibleStates(State<T>* state) = 0;
 };
 
 #endif //ADVANCED_PROGRAMMING_EX4_SEARCHABLE_H
