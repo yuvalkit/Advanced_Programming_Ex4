@@ -12,9 +12,7 @@ class BreadthFirstSearch : public AbstractSearcher<T>{
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         State<T>* n;
-        State<T>* last;
         n = searchable->getInitialState();
-        last = n;
         this->open.push(n);
         n->setColor('G');
         while (this->open.size() != 0) {
@@ -26,12 +24,13 @@ class BreadthFirstSearch : public AbstractSearcher<T>{
                     s->setSum(n->getSum() + 1);
                     s->setCameFrom(n);
                     this->open.push(s);
-                    last = s;
+                    if(searchable->isGoalState(s)) {
+                        return this->getBackTrace(s);
+                    }
                 }
             }
             n->setColor('B');
         }
-        return this->getBackTrace(last);
     }
 };
 
