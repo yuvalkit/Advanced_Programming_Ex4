@@ -33,7 +33,6 @@ protected:
     unordered_map<string, Entry<Problem, Solution>*> objMap;
     int maxSize;
     list<Entry<Problem, Solution>*> myList;
-    bool enter;
 public:
     virtual bool isExist(Problem p) = 0;
     virtual Solution getSolution(Problem p) = 0;

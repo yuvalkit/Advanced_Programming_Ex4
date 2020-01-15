@@ -35,7 +35,6 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
 public:
     FileCacheManager(int max) {
         this->maxSize = max;
-        this->enter= false;
     }
 
     ~FileCacheManager() {
