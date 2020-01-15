@@ -14,12 +14,14 @@ using namespace std;
 
 class MyParallelServer : public server_side::Server {
 private:
-    vector<thread*> threads;
+    vector<thread> threadsVector;
+    vector<bool> threadsIndex;
 public:
     MyParallelServer();
     void open(int port, ClientHandler* c);
     void stop();
-    void handleClientInThread(int clientSocket, ClientHandler* c);
+    void handleClientInThread(int clientSocket, ClientHandler* c, int threadIndex);
+    void joinTreads();
 };
 
 

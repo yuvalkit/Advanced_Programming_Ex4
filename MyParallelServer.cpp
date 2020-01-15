@@ -17,9 +17,9 @@ void MyParallelServer::stop() {
 }
 
 void MyParallelServer::open(int port, ClientHandler *c) {
-    thread t;
+    int threadCounter = 0;
     struct timeval timeout{};
-    timeout.tv_sec = 120;
+    timeout.tv_sec = 15;
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
         //error
@@ -49,16 +49,17 @@ void MyParallelServer::open(int port, ClientHandler *c) {
         if (clientSocket < 0) {
             if (errno == EWOULDBLOCK) {
                 cout << "timeout" << endl;
+                this->joinTreads();
+                this->stop();
             } else {
                 cout << "error with client socket" << endl;
             }
-            this->stop();
             continue;
         }
         cout << "client connected" << endl;
-        t = thread(&MyParallelServer::handleClientInThread, this, clientSocket, c);
-        this->threads.emplace_back(&t);
-
+        this->threadsIndex.emplace_back(true);
+        this->threadsVector.emplace_back(thread(&MyParallelServer::handleClientInThread, this, clientSocket, c, threadCounter));
+        threadCounter++;
 
 
     }
@@ -66,7 +67,16 @@ void MyParallelServer::open(int port, ClientHandler *c) {
     close(socketfd);
 }
 
+void MyParallelServer::joinTreads() {
+    for (int i = 0; i < this->threadsIndex.size(); i++) {
+        if(this->threadsIndex[i]) {
+            this->threadsVector[i].join();
+        }
+    }
+}
 
-void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c) {
+void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c, int threadIndex) {
     c->handleClient(clientSocket);
+    close(clientSocket);
+    this->threadsIndex[threadIndex]= false;
 }
