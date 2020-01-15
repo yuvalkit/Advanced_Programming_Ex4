@@ -35,7 +35,7 @@ class AStar : public AbstractSearcher<T> {
         int y1 = s1->getState()->getJ();
         int x2 = s2->getState()->getI();
         int y2 = s2->getState()->getJ();
-        return Utils::getDistance(x1, y1 , x2, y2);
+        return Utils::getDistance2(x1, y1 , x2, y2);
     }
 public:
     AStar() : AbstractSearcher<T>() {}

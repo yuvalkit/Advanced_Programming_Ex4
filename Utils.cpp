@@ -37,3 +37,7 @@ string Utils::removeSpaces(const string &str) {
 double Utils::getDistance(int x1, int y1, int x2, int y2) {
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
+
+double Utils::getDistance2(int x1, int y1, int x2, int y2) {
+    return abs(x2 - x1) + abs(y2 - y1);
+}
