@@ -13,7 +13,10 @@ class DepthFirstSearch : public AbstractSearcher<T> {
 public:
     DepthFirstSearch() : AbstractSearcher<T>() {}
     vector<State<T>*> search(Searchable<T>* searchable) {
-        vector<State<T>*> result;
+//        State<T>* n;
+//        n = searchable->getInitialState();
+//        return this->DFS(searchable, n);
+
         vector<State<T>*> successors;
         State<T>* n;
         n = searchable->getInitialState();
@@ -35,7 +38,26 @@ public:
             }
         }
     }
+
+//    vector<State<T>*> DFS(Searchable<T>* searchable, State<T>* state) {
+//        if (searchable->isGoalState(state)) {
+//            return this->getBackTrace(state);
+//        }
+//        state->setColor('G');
+//        vector<State<T>*> result;
+//        vector<State<T>*> successors;
+//        successors = searchable->getAllPossibleStates(state);
+//        for (State<T>* s : successors) {
+//            if (s->getColor() == 'W') {
+//                s->setCameFrom(state);
+//                result = this->DFS(searchable, s);
+//            }
+//        }
+//        state->setColor('B');
+//        return result;
+//    }
 };
+
 
 
 #endif //ADVANCED_PROGRAMMING_EX4_DEPTHFIRSTSEARCH_H

@@ -1,25 +1,23 @@
-////
-//// Created by giladby on 09/01/2020.
-////
 //
-#include "MySerialServer.h"
+// Created by yuvalkit on 15/01/2020.
+//
+
+#include "MyParallelServer.h"
 #include <iostream>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-using namespace std;
-
-MySerialServer::MySerialServer() {
+MyParallelServer::MyParallelServer() {
     this->toStop = false;
 }
 
-void MySerialServer::open(int port, ClientHandler* c) {
-    this->t = thread(&MySerialServer::start, this, port, c);
-    this->t.join();
+void MyParallelServer::stop() {
+    this->toStop = true;
 }
-void MySerialServer::start(int port, ClientHandler *c) {
-    int clientSocket;
+
+void MyParallelServer::open(int port, ClientHandler *c) {
+    thread t;
     struct timeval timeout{};
     timeout.tv_sec = 120;
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -47,7 +45,7 @@ void MySerialServer::start(int port, ClientHandler *c) {
         socklen_t clilen = sizeof(client);
         cout << "listening" << endl;
         // accept a client
-        clientSocket = accept(socketfd, (struct sockaddr *)&client, &clilen);
+        int clientSocket = accept(socketfd, (struct sockaddr *)&client, &clilen);
         if (clientSocket < 0) {
             if (errno == EWOULDBLOCK) {
                 cout << "timeout" << endl;
@@ -58,10 +56,17 @@ void MySerialServer::start(int port, ClientHandler *c) {
             continue;
         }
         cout << "client connected" << endl;
-        c->handleClient(clientSocket);
+        t = thread(&MyParallelServer::handleClientInThread, this, clientSocket, c);
+        this->threads.emplace_back(&t);
+
+
+
     }
+
     close(socketfd);
 }
-void MySerialServer::stop() {
-    this->toStop = true;
+
+
+void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c) {
+    c->handleClient(clientSocket);
 }
