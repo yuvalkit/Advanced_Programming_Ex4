@@ -6,9 +6,12 @@
 #define ADVANCED_PROGRAMMING_EX4_DEPTHFIRSTSEARCH_H
 
 #include "AbstractSearcher.h"
+#include "State.h"
 
 template <class T>
-class DepthFirstSearch : public AbstractSearcher<T>{
+class DepthFirstSearch : public AbstractSearcher<T> {
+public:
+    DepthFirstSearch() : AbstractSearcher<T>() {}
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> result;
         vector<State<T>*> successors;

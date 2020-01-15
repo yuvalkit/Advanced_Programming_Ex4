@@ -9,8 +9,6 @@
 
 template <class T>
 class BestFirstSearch : public AbstractSearcher<T> {
-private:
-
 public:
     BestFirstSearch() : AbstractSearcher<T>() {}
     vector<State<T>*> search(Searchable<T>* searchable) {

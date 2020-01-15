@@ -139,12 +139,14 @@ string MatrixProblem::getPath(vector<State<Node *>*> statesVector) {
     string result = "";
     int size = statesVector.size();
     State<Node*>* prev = statesVector[size - 1];
+    int counter = prev->getState()->getCost();
     State<Node*>* curr;
     for (int i = size - 2; i >= 0; i--) {
         if (i != size - 2) {
             result += ", ";
         }
         curr = statesVector[i];
+        counter += curr->getState()->getCost();
         if (prev->getState()->getI() > curr->getState()->getI()) {
             result += "Up";
         } else if (prev->getState()->getI() < curr->getState()->getI()) {
@@ -154,7 +156,7 @@ string MatrixProblem::getPath(vector<State<Node *>*> statesVector) {
         } else {
             result += "Right";
         }
-        result += " (" + to_string(curr->getSum()) + ")";
+        result += " (" + to_string(counter) + ")";
         prev = curr;
     }
     return result;

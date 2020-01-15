@@ -3,6 +3,7 @@
 //
 
 #include "Utils.h"
+#include<math.h>
 
 //split the given string by the given delimiter
 vector<string> Utils::split(string str, const string &delimiter) {
@@ -31,4 +32,8 @@ string Utils::removeSpaces(const string &str) {
         }
     }
     return result;
+}
+
+double Utils::getDistance(int x1, int y1, int x2, int y2) {
+    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
