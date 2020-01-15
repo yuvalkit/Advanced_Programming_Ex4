@@ -30,7 +30,7 @@ public:
 template <class Problem, class Solution>
 class CacheManager {
 protected:
-    unordered_map<Problem, Entry<Problem, Solution>*> objMap;
+    unordered_map<string, Entry<Problem, Solution>*> objMap;
     int maxSize;
     list<Entry<Problem, Solution>*> myList;
     bool enter;

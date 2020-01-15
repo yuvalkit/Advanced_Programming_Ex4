@@ -25,9 +25,9 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
     void toTheTop(Entry<Problem, Solution>* e) {
         this->myList.push_front(e);
         if(this->myList.size() > (unsigned)this->maxSize) {
-            auto temp = (this->myList.back());
+            Entry<Problem, Solution>* temp = (this->myList.back());
             this->myList.remove(temp);
-            this->objMap.erase (temp->problem);
+            this->objMap.erase (temp->problem->getString());
             delete temp;
         }
     }
@@ -46,7 +46,7 @@ public:
 
     bool isExist(Problem problem) {
         string name = problem->getString();
-        if(this->objMap.find(problem) != this->objMap.end()) {
+        if(this->objMap.find(name) != this->objMap.end()) {
             return true;
         }
         fstream file_obj;
@@ -67,7 +67,7 @@ public:
             object = this->myList.back()->solution;
         }
         // the key doesn't exist in the cache - search it in files
-        if(this->objMap.find(problem) == this->objMap.end()) {
+        if(this->objMap.find(name) == this->objMap.end()) {
             file_obj.open(name, ios::in|ios::binary);
             // key is missing in files
             if (!file_obj.is_open()) {
@@ -77,14 +77,14 @@ public:
                 file_obj.read((char *) &(object), sizeof(object));
                 Entry<Problem, Solution>* e = new Entry<Problem, Solution>(problem, object);
                 // update the current value in the map
-                this->objMap[problem] = e;
+                this->objMap[name] = e;
                 // update the list according the current value
                 this->toTheTop(e);
                 file_obj.close();
                 return object;
             }
         } else {
-            auto found = this->objMap.find(problem);
+            auto found = this->objMap.find(name);
             // update the list according the new entered value
             this->myList.remove((found->second));
             this->toTheTop((found->second));
@@ -107,13 +107,13 @@ public:
         outfile.close();
         Entry<Problem, Solution>* e = new Entry<Problem, Solution>(problem,solution);
         //the key is already exist in the map - remove it from the list, preventing duplicate.
-        if (this->objMap.find(problem) != this->objMap.end()) {
-            auto found = this->objMap.find(problem);
+        if (this->objMap.find(name) != this->objMap.end()) {
+            auto found = this->objMap.find(name);
             this->myList.remove((found->second));
             delete found->second;
         }
         // enter/update the value in the map
-        this->objMap[problem] = e;
+        this->objMap[name] = e;
         // update the list according the new entered value
         this->toTheTop(e);
     }
