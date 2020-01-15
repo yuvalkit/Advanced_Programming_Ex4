@@ -25,6 +25,7 @@ public:
     MatrixProblem(vector<string> inputProblem);
     string getString();
     bool isGoalState(State<Node*>* state);
+    State<Node*>* getGoalState();
     State<Node*>* getInitialState();
     vector<State<Node*>*> getAllPossibleStates(State<Node*>* state);
     void makeMatrix();

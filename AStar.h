@@ -30,17 +30,25 @@ public:
 template <class T>
 class AStar : public AbstractSearcher<T> {
     unordered_map<State<T>*, Wrap<T>*> stateToWrap;
+    double getDistance(State<T>* s1, State<T>* s2) {
+        int x1 = s1->getState()->getI();
+        int y1 = s1->getState()->getJ();
+        int x2 = s2->getState()->getI();
+        int y2 = s2->getState()->getJ();
+        return Utils::getDistance(x1, y1 , x2, y2);
+    }
 public:
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         int x1, y1, x2, y2;
         double tentativeScore, distance;
         State<T>* n = searchable->getInitialState();
+        State<T>* goal = searchable->getGoalState();
         this->open.push(n);
         Wrap<T>* w = new Wrap<T>(n);
         this->stateToWrap[n] = w;
         w->setDistance(n->getState()->getCost());
-        n->setSum(n->getState()->getCost());
+        n->setSum(this->stateToWrap[n]->getDistance() + this->getDistance(n, goal));
         while (this->open.size() != 0) {
             n = this->popOpen();
             if(searchable->isGoalState(n)) {
@@ -52,16 +60,11 @@ public:
                     w = new Wrap<T>(s);
                     this->stateToWrap[s] = w;
                 }
-                tentativeScore = s->getState()->getCost() + this->stateToWrap[n]->getDistance();
+                tentativeScore = this->stateToWrap[n]->getDistance() + s->getState()->getCost();
                 if(this->stateToWrap[s]->getDistance() > tentativeScore) {
                     s->setCameFrom(n);
                     this->stateToWrap[s]->setDistance(tentativeScore);
-                    x1 = n->getState()->getI();
-                    y1 = n->getState()->getJ();
-                    x2 = n->getState()->getI();
-                    y2 = n->getState()->getJ();
-                    distance = Utils::getDistance(x1, y1 , x2, y2);
-                    s->setSum(this->stateToWrap[s]->getDistance() + distance);
+                    s->setSum(this->stateToWrap[s]->getDistance() + this->getDistance(s, goal));
                     if(!this->isOpenContains(s)) {
                         this->open.push(s);
                     }

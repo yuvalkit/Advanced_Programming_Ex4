@@ -90,6 +90,13 @@ bool MatrixProblem::isGoalState(State<Node*> *state) {
     return false;
 }
 
+State<Node *> * MatrixProblem::getGoalState() {
+    if(this->goalStates.empty()) {
+        return NULL;
+    }
+    return this->goalStates[0];
+}
+
 State<Node *> * MatrixProblem::getInitialState() {
     return this->initialState;
 }
