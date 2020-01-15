@@ -23,6 +23,11 @@ public:
     SearchSolver(Searcher<T>* inputSearcher) {
         this->searcher = inputSearcher;
     }
+
+    Solver<Searchable<T>*, vector<State<Node*>*>>* getClone() {
+        return new SearchSolver<T> (this->searcher->getClone());
+    }
+
     vector<State<Node*>*> solve(Searchable<Node*>* searchable) {
         vector<State<Node*>*> result = this->searcher->search(searchable);
         cout << this->searcher->getNumberOfNodesEvaluated() << endl;

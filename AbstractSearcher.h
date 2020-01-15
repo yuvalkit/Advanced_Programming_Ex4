@@ -17,6 +17,7 @@ protected:
     set<State<T>*> closed;
     priority_queue<State<T>*, vector<State<T>*>, StateComparator<T>> open;
 public:
+
     AbstractSearcher() {
         this->nodesEvaluated = 0;
     }

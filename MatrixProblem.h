@@ -31,6 +31,7 @@ public:
     void makeMatrix();
     void printMatrix();
     static string getPath(vector<State<Node*>*> statesVector);
+    Searchable<Node*>* getClone();
 };
 
 

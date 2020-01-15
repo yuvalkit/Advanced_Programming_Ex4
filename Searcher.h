@@ -17,6 +17,7 @@ protected:
 public:
     virtual vector<State<T>*> search(Searchable<T>* searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
+    virtual Searcher<T>* getClone() = 0;
 };
 
 

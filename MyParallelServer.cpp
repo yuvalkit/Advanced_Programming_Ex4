@@ -75,7 +75,8 @@ void MyParallelServer::joinTreads() {
 
 void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c, int threadCounter) {
     cout << "start handling client " + to_string(threadCounter) << endl;
-    c->handleClient(clientSocket);
+    ClientHandler* clone = c->getClone();
+    clone->handleClient(clientSocket);
     this->threadsFlags[threadCounter]= false;
     close(clientSocket);
     cout << "finish handling client " + to_string(threadCounter) << endl;

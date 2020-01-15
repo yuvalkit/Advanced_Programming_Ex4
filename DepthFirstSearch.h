@@ -12,6 +12,11 @@ template <class T>
 class DepthFirstSearch : public AbstractSearcher<T> {
 public:
     DepthFirstSearch() : AbstractSearcher<T>() {}
+
+    Searcher<T>* getClone() {
+        return new DepthFirstSearch<T>();
+    }
+
     vector<State<T>*> search(Searchable<T>* searchable) {
 //        State<T>* n;
 //        n = searchable->getInitialState();

@@ -22,6 +22,7 @@ public:
     virtual State<T>* getGoalState() = 0;
     virtual State<T>* getInitialState() = 0;
     virtual vector<State<T>*> getAllPossibleStates(State<T>* state) = 0;
+    virtual Searchable<T>* getClone() = 0;
 };
 
 #endif //ADVANCED_PROGRAMMING_EX4_SEARCHABLE_H

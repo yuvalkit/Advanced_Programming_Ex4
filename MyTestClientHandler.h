@@ -27,6 +27,7 @@ private:
 public:
     MyTestClientHandler(Solver<string, string>* inputSolver, CacheManager <ReverseProblem*, string>* inputCm);
     void handleClient(int clientSocket);
+    ClientHandler* getClone();
 };
 
 

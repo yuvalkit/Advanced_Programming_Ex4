@@ -38,6 +38,12 @@ class AStar : public AbstractSearcher<T> {
         return Utils::getDistance(x1, y1 , x2, y2);
     }
 public:
+    AStar() : AbstractSearcher<T>() {}
+
+    Searcher<T>* getClone() {
+        return new AStar<T>();
+    }
+
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         int x1, y1, x2, y2;

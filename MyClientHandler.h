@@ -23,6 +23,7 @@ private:
 public:
     void handleClient(int clientSocket);
     MyClientHandler(Solver<Searchable<Node*>*, vector<State<Node*>*>>* inputSolver, CacheManager <Searchable<Node*>*, string>* inputCm);
+    ClientHandler* getClone();
 };
 
 

@@ -46,3 +46,7 @@ void MyTestClientHandler::handleClient(int clientSocket) {
         data = read(clientSocket, buffer, 1024);
     }
 }
+
+ClientHandler* MyTestClientHandler::getClone() {
+    return new MyTestClientHandler(this->solver->getClone(), this->cm->getClone());
+}

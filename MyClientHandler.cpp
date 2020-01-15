@@ -80,6 +80,7 @@ void MyClientHandler::handleClient(int clientSocket) {
         }
         data = read(clientSocket, buffer, 1024);
     }
+    cout << "got data "<<endl;
     searchable = new MatrixProblem(valuesVector);
     cout << "got matrix "<<endl;
     if(this->cm->isExist(searchable)) {
@@ -94,4 +95,8 @@ void MyClientHandler::handleClient(int clientSocket) {
         cerr << "failed send message"<< endl;
         exit(1);
     }
+}
+
+ClientHandler * MyClientHandler::getClone() {
+    return new MyClientHandler(this->solver->getClone(), this->cm->getClone());
 }

@@ -11,6 +11,11 @@ template <class T>
 class BreadthFirstSearch : public AbstractSearcher<T>{
 public:
     BreadthFirstSearch() : AbstractSearcher<T>() {}
+
+    Searcher<T>* getClone() {
+        return new BreadthFirstSearch<T>();
+    }
+
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         State<T>* n;

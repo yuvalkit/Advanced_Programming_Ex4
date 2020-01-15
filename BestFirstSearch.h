@@ -11,6 +11,11 @@ template <class T>
 class BestFirstSearch : public AbstractSearcher<T> {
 public:
     BestFirstSearch() : AbstractSearcher<T>() {}
+
+    Searcher<T>* getClone() {
+        return new BestFirstSearch<T>();
+    }
+
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         State<T>* n = searchable->getInitialState();

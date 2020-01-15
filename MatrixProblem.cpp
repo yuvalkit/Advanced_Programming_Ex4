@@ -12,6 +12,17 @@ MatrixProblem::MatrixProblem(vector<string> inputProblem) {
     this->makeMatrix();
 }
 
+Searchable<Node *> * MatrixProblem::getClone() {
+    // Declaring new vector
+    vector<string> copy;
+
+    // Copying vector by copy function
+    for(unsigned int i = this->problemVector.size() - 1 ; i >= 0; i--) {
+        copy.emplace_back(this->problemVector[i]);
+    }
+    return new MatrixProblem(copy);
+}
+
 string MatrixProblem::makeProblemString() {
     string str = "";
     for (int i = 0; i < this->problemVector.size(); i++) {

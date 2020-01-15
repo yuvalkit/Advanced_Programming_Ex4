@@ -44,6 +44,10 @@ public:
         }
     }
 
+    CacheManager<Problem, Solution>* getClone() {
+        return new FileCacheManager<Problem, Solution>(this->maxSize);
+    }
+
     bool isExist(Problem problem) {
         string name = problem->getString();
         if(this->objMap.find(name) != this->objMap.end()) {

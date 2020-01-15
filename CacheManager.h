@@ -38,6 +38,7 @@ public:
     virtual bool isExist(Problem p) = 0;
     virtual Solution getSolution(Problem p) = 0;
     virtual void saveSolution(Problem p, Solution s) = 0;
+    virtual CacheManager<Problem, Solution>* getClone() = 0;
 };
 
 
