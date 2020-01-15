@@ -19,7 +19,7 @@ void MyParallelServer::stop() {
 void MyParallelServer::open(int port, ClientHandler *c) {
     int threadCounter = 0;
     struct timeval timeout{};
-    timeout.tv_sec = 15;
+    timeout.tv_sec = 120;
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
         //error
@@ -35,7 +35,7 @@ void MyParallelServer::open(int port, ClientHandler *c) {
         std::cerr<<"Could not bind the socket to an IP"<<endl;
         exit(1);
     }
-    if (listen(socketfd, 5) == -1) {
+    if (listen(socketfd, 10) == -1) {
         std::cerr<<"Error during listening command"<<endl;
         exit(1);
     }
@@ -56,27 +56,27 @@ void MyParallelServer::open(int port, ClientHandler *c) {
             }
             continue;
         }
-        cout << "client connected" << endl;
-        this->threadsIndex.emplace_back(true);
+        cout << "client " + to_string(threadCounter) + " connected" << endl;
+        this->threadsFlags.emplace_back(true);
         this->threadsVector.emplace_back(thread(&MyParallelServer::handleClientInThread, this, clientSocket, c, threadCounter));
         threadCounter++;
-
-
     }
 
     close(socketfd);
 }
 
 void MyParallelServer::joinTreads() {
-    for (int i = 0; i < this->threadsIndex.size(); i++) {
-        if(this->threadsIndex[i]) {
+    for (int i = 0; i < this->threadsFlags.size(); i++) {
+        if(this->threadsFlags[i]) {
             this->threadsVector[i].join();
         }
     }
 }
 
-void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c, int threadIndex) {
+void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c, int threadCounter) {
+    cout << "start handling client " + to_string(threadCounter) << endl;
     c->handleClient(clientSocket);
+    this->threadsFlags[threadCounter]= false;
     close(clientSocket);
-    this->threadsIndex[threadIndex]= false;
+    cout << "finish handling client " + to_string(threadCounter) << endl;
 }

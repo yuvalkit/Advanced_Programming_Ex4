@@ -15,7 +15,7 @@ using namespace std;
 class MyParallelServer : public server_side::Server {
 private:
     vector<thread> threadsVector;
-    vector<bool> threadsIndex;
+    vector<bool> threadsFlags;
 public:
     MyParallelServer();
     void open(int port, ClientHandler* c);
