@@ -81,6 +81,7 @@ void MyClientHandler::handleClient(int clientSocket) {
         data = read(clientSocket, buffer, 1024);
     }
     searchable = new MatrixProblem(valuesVector);
+    cout << "got matrix "<<endl;
     if(this->cm->isExist(searchable)) {
         solution = this->cm->getSolution(searchable);
     } else {
