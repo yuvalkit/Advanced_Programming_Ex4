@@ -31,7 +31,7 @@ namespace boot {
             Searcher<Node*>* searcher = new AStar<Node*>();
             Solver<Searchable<Node*>*, vector<State<Node*>*>>* s = new SearchSolver<Node*>(searcher);
             ClientHandler* c = new MyClientHandler(s, cm);
-            server_side::Server* server = new MySerialServer();
+            server_side::Server* server = new MyParallelServer();
             if(argc >= 2) {
                 server->open(strtod(argv[1], NULL), c);
             }

@@ -18,10 +18,6 @@ public:
     }
 
     vector<State<T>*> search(Searchable<T>* searchable) {
-//        State<T>* n;
-//        n = searchable->getInitialState();
-//        return this->DFS(searchable, n);
-
         vector<State<T>*> successors;
         State<T>* n;
         n = searchable->getInitialState();
@@ -43,24 +39,6 @@ public:
             }
         }
     }
-
-//    vector<State<T>*> DFS(Searchable<T>* searchable, State<T>* state) {
-//        if (searchable->isGoalState(state)) {
-//            return this->getBackTrace(state);
-//        }
-//        state->setColor('G');
-//        vector<State<T>*> result;
-//        vector<State<T>*> successors;
-//        successors = searchable->getAllPossibleStates(state);
-//        for (State<T>* s : successors) {
-//            if (s->getColor() == 'W') {
-//                s->setCameFrom(state);
-//                result = this->DFS(searchable, s);
-//            }
-//        }
-//        state->setColor('B');
-//        return result;
-//    }
 };
 
 

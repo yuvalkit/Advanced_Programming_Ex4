@@ -80,15 +80,15 @@ void MyClientHandler::handleClient(int clientSocket) {
         }
         data = read(clientSocket, buffer, 1024);
     }
-    cout << "got data "<<endl;
     searchable = new MatrixProblem(valuesVector);
-    cout << "got matrix "<<endl;
     if(this->cm->isExist(searchable)) {
         solution = this->cm->getSolution(searchable);
+        cout << "got from cache" << endl;
     } else {
         solutionVector = this->solver->solve(searchable);
         solution = MatrixProblem::getPath(solutionVector);
         this->cm->saveSolution(searchable, solution);
+        cout << "calculated" << endl;
     }
     isSent = send(clientSocket, solution.c_str(), solution.size(), 0);
     if(isSent == -1) {
@@ -98,5 +98,5 @@ void MyClientHandler::handleClient(int clientSocket) {
 }
 
 ClientHandler * MyClientHandler::getClone() {
-    return new MyClientHandler(this->solver->getClone(), this->cm->getClone());
+    return new MyClientHandler(this->solver->getClone(), this->cm);
 }

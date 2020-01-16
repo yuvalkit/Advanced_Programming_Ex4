@@ -23,10 +23,9 @@ public:
     }
 
     int getNumberOfNodesEvaluated() {
-        int result = this->nodesEvaluated;
-        this->nodesEvaluated = 0;
-        return result;
+        return this->nodesEvaluated;
     }
+
 
     State<T>* popOpen() {
         this->nodesEvaluated++;

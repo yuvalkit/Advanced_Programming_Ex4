@@ -35,7 +35,6 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
 public:
     FileCacheManager(int max) {
         this->maxSize = max;
-        this->enter= false;
     }
 
     ~FileCacheManager() {
@@ -50,6 +49,9 @@ public:
 
     bool isExist(Problem problem) {
         string name = problem->getString();
+        if (this->objMap.empty()) {
+            return false;
+        }
         if(this->objMap.find(name) != this->objMap.end()) {
             return true;
         }

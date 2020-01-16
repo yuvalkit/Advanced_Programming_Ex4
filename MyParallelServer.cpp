@@ -56,7 +56,6 @@ void MyParallelServer::open(int port, ClientHandler *c) {
             }
             continue;
         }
-        cout << "client " + to_string(threadCounter) + " connected" << endl;
         this->threadsFlags.emplace_back(true);
         this->threadsVector.emplace_back(thread(&MyParallelServer::handleClientInThread, this, clientSocket, c, threadCounter));
         threadCounter++;
@@ -74,10 +73,8 @@ void MyParallelServer::joinTreads() {
 }
 
 void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c, int threadCounter) {
-    cout << "start handling client " + to_string(threadCounter) << endl;
     ClientHandler* clone = c->getClone();
     clone->handleClient(clientSocket);
     this->threadsFlags[threadCounter]= false;
     close(clientSocket);
-    cout << "finish handling client " + to_string(threadCounter) << endl;
 }
