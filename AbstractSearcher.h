@@ -23,7 +23,9 @@ public:
     }
 
     int getNumberOfNodesEvaluated() {
-        return this->nodesEvaluated;
+        int result = this->nodesEvaluated;
+        this->nodesEvaluated = 0;
+        return result;
     }
 
 

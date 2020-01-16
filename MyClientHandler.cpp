@@ -83,7 +83,6 @@ void MyClientHandler::handleClient(int clientSocket) {
     searchable = new MatrixProblem(valuesVector);
     if(this->cm->isExist(searchable)) {
         solution = this->cm->getSolution(searchable);
-        cout << "got from cache" << endl;
     } else {
         solutionVector = this->solver->solve(searchable);
         solution = MatrixProblem::getPath(solutionVector);

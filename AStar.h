@@ -30,12 +30,22 @@ public:
 template <class T>
 class AStar : public AbstractSearcher<T> {
     unordered_map<State<T>*, Wrap<T>*> stateToWrap;
-    double getDistance(State<T>* s1, State<T>* s2) {
+    int getMinMove(State<T>* state, Searchable<T>* searchable) {
+        vector<State<T>*> successors = searchable->getAllPossibleStates(state);
+        int min = numeric_limits<int>::max();;
+        for(State<T>* s : successors) {
+            if(s->getState()->getCost() < min) {
+                min = s->getState()->getCost();
+            }
+        }
+        return min;
+    }
+    double getH(State<T>* s1, State<T>* s2, Searchable<T>* searchable) {
         int x1 = s1->getState()->getI();
         int y1 = s1->getState()->getJ();
         int x2 = s2->getState()->getI();
         int y2 = s2->getState()->getJ();
-        return Utils::getDistance2(x1, y1 , x2, y2);
+        return Utils::getDistance(x1, y1 , x2, y2);
     }
 public:
     AStar() : AbstractSearcher<T>() {}
@@ -54,7 +64,7 @@ public:
         Wrap<T>* w = new Wrap<T>(n);
         this->stateToWrap[n] = w;
         w->setDistance(n->getState()->getCost());
-        n->setSum(this->stateToWrap[n]->getDistance() + this->getDistance(n, goal));
+        n->setSum(this->stateToWrap[n]->getDistance() + this->getH(n, goal, searchable));
         while (this->open.size() != 0) {
             n = this->popOpen();
             if(searchable->isGoalState(n)) {
@@ -70,7 +80,7 @@ public:
                 if(this->stateToWrap[s]->getDistance() > tentativeScore) {
                     s->setCameFrom(n);
                     this->stateToWrap[s]->setDistance(tentativeScore);
-                    s->setSum(this->stateToWrap[s]->getDistance() + this->getDistance(s, goal));
+                    s->setSum(this->stateToWrap[s]->getDistance() + this->getH(s, goal, searchable));
                     if(!this->isOpenContains(s)) {
                         this->open.push(s);
                     }
