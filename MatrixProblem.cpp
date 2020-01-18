@@ -12,6 +12,7 @@ MatrixProblem::MatrixProblem(vector<string> inputProblem) {
     this->makeMatrix();
 }
 
+//a method for creating deep clone of the object
 Searchable<Node *> * MatrixProblem::getClone() {
     // Declaring new vector
     vector<string> copy;

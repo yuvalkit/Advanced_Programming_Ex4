@@ -47,6 +47,7 @@ void MyTestClientHandler::handleClient(int clientSocket) {
     }
 }
 
+//a method for creating deep clone of the object
 ClientHandler* MyTestClientHandler::getClone() {
     return new MyTestClientHandler(this->solver->getClone(), this->cm->getClone());
 }

@@ -13,6 +13,7 @@ class DepthFirstSearch : public AbstractSearcher<T> {
 public:
     DepthFirstSearch() : AbstractSearcher<T>() {}
 
+    //a method for creating deep clone of the object
     Searcher<T>* getClone() {
         return new DepthFirstSearch<T>();
     }

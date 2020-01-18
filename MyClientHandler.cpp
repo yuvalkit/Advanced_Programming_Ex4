@@ -97,5 +97,5 @@ void MyClientHandler::handleClient(int clientSocket) {
 }
 
 ClientHandler * MyClientHandler::getClone() {
-    return new MyClientHandler(this->solver->getClone(), this->cm);
+    return new MyClientHandler(this->solver->getClone(), this->cm->getClone());
 }

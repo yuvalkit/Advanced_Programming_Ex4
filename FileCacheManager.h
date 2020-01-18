@@ -43,11 +43,15 @@ public:
         }
     }
 
+    //a method for creating deep clone of the object
     CacheManager<Problem, string>* getClone() {
         return new FileCacheManager<Problem>(this->maxSize);
     }
 
+    //check if the given problem has already a solution.
+    //search first the solution in the lru map, and if the soultion isn't there, search it in files.
     bool isExist(Problem problem) {
+        //convert the problem to a string, for easy handling
         string name = problem->getString();
         if(this->objMap.find(name) != this->objMap.end()) {
             return true;
@@ -62,11 +66,13 @@ public:
         return true;
     }
 
+    //return the solution for the given problem
     string getSolution(Problem problem) {
+        //convert the problem to a string, for easy handling
         string name = problem->getString();
         ifstream file_obj;
         string object = "", temp;
-        // the key doesn't exist in the cache - search it in files
+        // the key doesn't exist in the lru map - search it in files
         if(this->objMap.find(name) == this->objMap.end()) {
             file_obj.open(name);
             // key is missing in files
@@ -96,8 +102,9 @@ public:
         }
     }
 
-
+    // save a new solution in lru map and in a file
     void saveSolution(Problem problem, string solution) {
+        //convert the problem to a string, for easy handling
         string name = problem->getString();
         ofstream outfile(name);
         if (!outfile) {

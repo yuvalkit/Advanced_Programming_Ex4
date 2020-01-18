@@ -12,6 +12,7 @@ class BestFirstSearch : public AbstractSearcher<T> {
 public:
     BestFirstSearch() : AbstractSearcher<T>() {}
 
+    //a method for creating deep clone of the object
     Searcher<T>* getClone() {
         return new BestFirstSearch<T>();
     }

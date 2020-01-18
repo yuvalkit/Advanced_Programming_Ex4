@@ -12,7 +12,7 @@ using namespace std;
 
 /**
  * Entry class.
- * Entry's object holds a field of the string key and a field for the data
+ * Entry's object holds a field of the problem and a field for the solution
  */
 
 template <class Problem, class Solution>
@@ -27,6 +27,9 @@ public:
     }
 };
 
+/**
+ * CacheManager interface
+ */
 template <class Problem, class Solution>
 class CacheManager {
 protected:

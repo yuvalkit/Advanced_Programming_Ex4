@@ -11,6 +11,10 @@
 #include <set>
 #include <vector>
 
+/**
+ * AbstractSearcher class
+ * This class is used for sharing code for the different implements of the searcher interface.
+ */
 template <class T>
 class AbstractSearcher : public Searcher<T> {
 protected:
@@ -22,13 +26,14 @@ public:
         this->nodesEvaluated = 0;
     }
 
+    //get the number of elements the algorithm visited in.
     int getNumberOfNodesEvaluated() {
         int result = this->nodesEvaluated;
         this->nodesEvaluated = 0;
         return result;
     }
 
-
+    // return the top element in the minimum priority queue, remove it, and re-organized the priority queue
     State<T>* popOpen() {
         this->nodesEvaluated++;
         State<T>* state = this->open.top();
@@ -36,9 +41,11 @@ public:
         return state;
     }
 
+    // get the trace from the end state to the first
     vector<State<T>*> getBackTrace(State<T>* state) {
         vector<State<T>*> result;
         result.emplace_back(state);
+        // add to the result vector the current state and move the state that the current state came from
         while (state->getCameFrom() != NULL) {
             state = state->getCameFrom();
             result.emplace_back(state);
@@ -46,9 +53,11 @@ public:
         return result;
     }
 
+    //check if the priority queue contains the given state
     bool isOpenContains(State<T>* state) {
         vector<State<T>*> copy;
         bool isContain = false;
+        //make a copy of the priority queue
         while(!this->open.empty()) {
             copy.emplace_back(this->open.top());
             this->open.pop();

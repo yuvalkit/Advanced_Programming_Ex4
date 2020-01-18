@@ -10,6 +10,10 @@
 #include <unordered_map>
 #include <limits>
 
+/**
+ * Wrap class
+ * This class wraps state object, for supply extra information for them.
+ */
 template <class T>
 class Wrap {
     State<T>* state;
@@ -19,28 +23,27 @@ public:
         this->state = inputState;
         this->distance = numeric_limits<int>::max();
     }
+    // get the minimum distance from the start state (the gScore)
     double getDistance() {
         return this->distance;
     }
+    // set the minimum distance from the start state (the gScore)
     void setDistance(double newVal) {
         this->distance = newVal;
     }
 };
 
+/**
+ * AStar class
+ */
 template <class T>
 class AStar : public AbstractSearcher<T> {
+    // this map is used for mapping for a state object to the the object wraps it
     unordered_map<State<T>*, Wrap<T>*> stateToWrap;
-    int getMinMove(State<T>* state, Searchable<T>* searchable) {
-        vector<State<T>*> successors = searchable->getAllPossibleStates(state);
-        int min = numeric_limits<int>::max();;
-        for(State<T>* s : successors) {
-            if(s->getState()->getCost() < min) {
-                min = s->getState()->getCost();
-            }
-        }
-        return min;
-    }
-    double getH(State<T>* s1, State<T>* s2, Searchable<T>* searchable) {
+
+    // get the H function (the heuristics function) for a given state.
+    // the function is computing the absolute distance between the current state and the goal state
+    double getH(State<T>* s1, State<T>* s2) {
         int x1 = s1->getState()->getI();
         int y1 = s1->getState()->getJ();
         int x2 = s2->getState()->getI();
@@ -50,15 +53,19 @@ class AStar : public AbstractSearcher<T> {
 public:
     AStar() : AbstractSearcher<T>() {}
 
+    //a method for creating deep clone of the object
     Searcher<T>* getClone() {
         return new AStar<T>();
     }
 
+    // the a star algorithm for finding the shortest path form the starting state to a goal state
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         int x1, y1, x2, y2;
         double tentativeScore, distance;
+        // get the starting state
         State<T>* n = searchable->getInitialState();
+        // get a goal state
         State<T>* goal = searchable->getGoalState();
         this->open.push(n);
         Wrap<T>* w = new Wrap<T>(n);
