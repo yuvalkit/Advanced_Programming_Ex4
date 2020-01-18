@@ -7,6 +7,9 @@
 
 #include "AbstractSearcher.h"
 
+/**
+ * BreadthFirstSearch class
+ */
 template <class T>
 class BreadthFirstSearch : public AbstractSearcher<T>{
 public:
@@ -17,11 +20,14 @@ public:
         return new BreadthFirstSearch<T>();
     }
 
+    // the BreadthFirstSearch algorithm for finding path form the starting state to a goal state by breadth searching
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         State<T>* n;
+        // get the starting state
         n = searchable->getInitialState();
         this->open.push(n);
+        // color the state in gray color
         n->setColor('G');
         while (this->open.size() != 0) {
             n = this->popOpen();

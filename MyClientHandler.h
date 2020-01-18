@@ -16,6 +16,9 @@
 
 using namespace std;
 
+/**
+ * MyClientHandler class
+ */
 class MyClientHandler : public ClientHandler {
 private:
     Solver<Searchable<Node*>*, vector<State<Node*>*>>* solver;

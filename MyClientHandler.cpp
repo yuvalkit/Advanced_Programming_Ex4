@@ -12,6 +12,8 @@ MyClientHandler::MyClientHandler(Solver<Searchable<Node*>*, vector<State<Node*>*
     this->solver = inputSolver;
 }
 
+// get the clientSocket and receive a matrix problem from the client line by line, and send the solution back to him.
+// search the solution in cache, and if it is not exist yet, calculate it and save it in the cache.
 void MyClientHandler::handleClient(int clientSocket) {
     int isSent, counterValid;
     bool validFlag, finishFlag, newLineFlag;
@@ -26,6 +28,7 @@ void MyClientHandler::handleClient(int clientSocket) {
     Searchable<Node*>* searchable;
     char c;
     int data = read(clientSocket, buffer, 1024);
+    // getting the matrix line by line
     while (data != -1) {
         finishFlag = false;
         newLineFlag = false;
@@ -81,6 +84,7 @@ void MyClientHandler::handleClient(int clientSocket) {
         data = read(clientSocket, buffer, 1024);
     }
     searchable = new MatrixProblem(valuesVector);
+    // check if the solution has been already calculated
     if(this->cm->isExist(searchable)) {
         solution = this->cm->getSolution(searchable);
     } else {
@@ -96,6 +100,7 @@ void MyClientHandler::handleClient(int clientSocket) {
     }
 }
 
+//a method for creating deep clone of the object
 ClientHandler * MyClientHandler::getClone() {
     return new MyClientHandler(this->solver->getClone(), this->cm->getClone());
 }

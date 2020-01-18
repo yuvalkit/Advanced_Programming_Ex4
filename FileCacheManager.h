@@ -19,9 +19,8 @@ using namespace std;
  */
 template <class Problem>
 class FileCacheManager : public CacheManager<Problem, string> {
-    /**
-    * enter the value into the list, if reach to the limit - remove the least recently Used node.
-    */
+
+    //enter the value into the list, if reach to the limit - remove the least recently Used node.
     void toTheTop(Entry<Problem, string>* e) {
         this->myList.push_front(e);
         if(this->myList.size() > (unsigned)this->maxSize) {

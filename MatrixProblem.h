@@ -13,6 +13,9 @@
 
 using namespace std;
 
+/**
+ * MatrixProblem class
+ */
 class MatrixProblem : public Searchable<Node*> {
     vector<string> problemVector;
     string problemString;

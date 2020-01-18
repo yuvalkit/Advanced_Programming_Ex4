@@ -12,10 +12,12 @@ MyParallelServer::MyParallelServer() {
     this->toStop = false;
 }
 
+// make the server stop getting another clients
 void MyParallelServer::stop() {
     this->toStop = true;
 }
 
+// wait for clients and solve for them problems until timeout
 void MyParallelServer::open(int port, ClientHandler *c) {
     int threadCounter = 0;
     struct timeval timeout{};
@@ -47,8 +49,10 @@ void MyParallelServer::open(int port, ClientHandler *c) {
         // accept a client
         int clientSocket = accept(socketfd, (struct sockaddr *)&client, &clilen);
         if (clientSocket < 0) {
+            // check if the connection close because of timeout or there was problem with a client
             if (errno == EWOULDBLOCK) {
                 cout << "timeout" << endl;
+                // wait for closing all the opened sockets, and then close the main server socket
                 this->joinTreads();
                 this->stop();
             } else {
@@ -64,6 +68,7 @@ void MyParallelServer::open(int port, ClientHandler *c) {
     close(socketfd);
 }
 
+// wait for all client connections to be finished
 void MyParallelServer::joinTreads() {
     for (int i = 0; i < this->threadsFlags.size(); i++) {
         if(this->threadsFlags[i]) {
@@ -72,9 +77,11 @@ void MyParallelServer::joinTreads() {
     }
 }
 
+// handle the current client in unique thread.
 void MyParallelServer::handleClientInThread(int clientSocket, ClientHandler *c, int threadCounter) {
     ClientHandler* clone = c->getClone();
     clone->handleClient(clientSocket);
+    // when finish handle the client, mark it in the updating threads vector, and close the socket
     this->threadsFlags[threadCounter]= false;
     close(clientSocket);
 }

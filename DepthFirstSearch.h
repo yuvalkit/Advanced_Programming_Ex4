@@ -8,6 +8,9 @@
 #include "AbstractSearcher.h"
 #include "State.h"
 
+/**
+ * DepthFirstSearch class
+ */
 template <class T>
 class DepthFirstSearch : public AbstractSearcher<T> {
 public:
@@ -18,6 +21,7 @@ public:
         return new DepthFirstSearch<T>();
     }
 
+    // the DepthFirstSearch algorithm for finding path form the starting state to a goal state by depth searching
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
         State<T>* n;
@@ -25,6 +29,7 @@ public:
         this->open.push(n);
         while (!this->open.empty()) {
             n = this->popOpen();
+            // get the starting state
             if(searchable->isGoalState(n)) {
                 return this->getBackTrace(n);
             }

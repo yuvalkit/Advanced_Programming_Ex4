@@ -12,6 +12,9 @@
 
 using namespace std;
 
+/**
+ * MyParallelServer class
+ */
 class MyParallelServer : public server_side::Server {
 private:
     vector<thread> threadsVector;
