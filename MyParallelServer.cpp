@@ -68,7 +68,7 @@ void MyParallelServer::open(int port, ClientHandler *c) {
 
 // wait for all client connections to be finished
 void MyParallelServer::joinTreads() {
-    for (int i = 0; i < this->threadsFlags.size(); i++) {
+    for (unsigned int i = 0; i < this->threadsFlags.size(); i++) {
         if(this->threadsFlags[i]) {
             this->threadsVector[i].join();
         }

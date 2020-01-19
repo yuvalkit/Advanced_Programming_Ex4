@@ -18,7 +18,7 @@ Searchable<Node *> * MatrixProblem::getClone() {
     vector<string> copy;
 
     // Copying vector by copy function
-    for(unsigned int i = this->problemVector.size() - 1 ; i >= 0; i--) {
+    for(int i = this->problemVector.size() - 1 ; i >= 0; i--) {
         copy.emplace_back(this->problemVector[i]);
     }
     return new MatrixProblem(copy);
@@ -42,14 +42,14 @@ void MatrixProblem::makeMatrix() {
     vector<string> cells;
     int size = this->problemVector.size();
     this->rows = this->problemVector.size() - 2;
-    for (unsigned int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         cells = Utils::split(this->problemVector[i], ",");
         if (i < size - 2) {
             if (i == 0) {
                 this->cols = cells.size();
                 this->initMatrix();
             } else {
-                if (cells.size() != this->cols) {
+                if (cells.size() != (unsigned)this->cols) {
                     cerr << "bad matrix size input" << endl;
                     exit(1);
                 }
