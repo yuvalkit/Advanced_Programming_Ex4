@@ -99,6 +99,8 @@ public:
                 }
             }
         }
+        cerr << "error: cannot get the goal state" << endl;
+        exit(1);
     }
 };
 

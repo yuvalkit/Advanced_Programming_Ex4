@@ -45,6 +45,8 @@ public:
             }
             n->setColor('B');
         }
+        cerr << "error: cannot get the goal state" << endl;
+        exit(1);
     }
 };
 
