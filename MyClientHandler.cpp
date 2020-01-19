@@ -91,7 +91,6 @@ void MyClientHandler::handleClient(int clientSocket) {
         solutionVector = this->solver->solve(searchable);
         solution = MatrixProblem::getPath(solutionVector);
         this->cm->saveSolution(searchable, solution);
-        cout << "calculated" << endl;
     }
     isSent = send(clientSocket, solution.c_str(), solution.size(), 0);
     if(isSent == -1) {

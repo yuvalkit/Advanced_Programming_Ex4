@@ -45,13 +45,11 @@ void MyParallelServer::open(int port, ClientHandler *c) {
     while (!this->toStop) {
         struct sockaddr_in client;
         socklen_t clilen = sizeof(client);
-        cout << "listening" << endl;
         // accept a client
         int clientSocket = accept(socketfd, (struct sockaddr *)&client, &clilen);
         if (clientSocket < 0) {
             // check if the connection close because of timeout or there was problem with a client
             if (errno == EWOULDBLOCK) {
-                cout << "timeout" << endl;
                 // wait for closing all the opened sockets, and then close the main server socket
                 this->joinTreads();
                 this->stop();

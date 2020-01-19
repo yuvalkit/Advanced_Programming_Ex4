@@ -88,7 +88,6 @@ public:
                 this->objMap[name] = e;
                 // update the list according the current value
                 this->toTheTop(e);
-                cout << "got from file" << endl;
                 return object;
             }
         } else {
@@ -96,7 +95,6 @@ public:
             // update the list according the new entered value
             this->myList.remove((found->second));
             this->toTheTop((found->second));
-            cout << "got from cache" << endl;
             return found->second->solution;
         }
     }
