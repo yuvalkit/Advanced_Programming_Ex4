@@ -8,6 +8,9 @@
 #include "ClientHandler.h"
 
 namespace server_side {
+    /**
+    * Server interface
+    */
     class Server {
     protected:
         bool toStop;

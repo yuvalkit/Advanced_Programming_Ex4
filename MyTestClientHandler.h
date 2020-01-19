@@ -20,6 +20,9 @@
 
 using namespace std;
 
+/**
+ * MyTestClientHandler class
+ */
 class MyTestClientHandler : public ClientHandler {
 private:
     Solver<string, string>* solver;

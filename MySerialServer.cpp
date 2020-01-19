@@ -18,6 +18,8 @@ void MySerialServer::open(int port, ClientHandler* c) {
     this->t = thread(&MySerialServer::start, this, port, c);
     this->t.join();
 }
+
+//get clients and handle them one by one
 void MySerialServer::start(int port, ClientHandler *c) {
     int clientSocket;
     struct timeval timeout{};
@@ -62,6 +64,8 @@ void MySerialServer::start(int port, ClientHandler *c) {
     }
     close(socketfd);
 }
+
+// make the server stop getting another clients
 void MySerialServer::stop() {
     this->toStop = true;
 }

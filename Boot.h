@@ -27,7 +27,7 @@ namespace boot {
     class Main {
     public:
         int main1(int argc, char** argv) {
-            CacheManager<Searchable<Node*>*, string>* cm = new FileCacheManager<Searchable<Node*>*>(1);
+            CacheManager<Searchable<Node*>*, string>* cm = new FileCacheManager<Searchable<Node*>*>(5);
             Searcher<Node*>* searcher = new AStar<Node*>();
             Solver<Searchable<Node*>*, vector<State<Node*>*>>* s = new SearchSolver<Node*>(searcher);
             ClientHandler* c = new MyClientHandler(s, cm);

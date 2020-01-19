@@ -10,6 +10,9 @@
 
 using namespace std;
 
+/**
+ * Searcher interface
+ */
 template <class T>
 class Searcher {
 protected:

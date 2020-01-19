@@ -9,6 +9,9 @@
 
 using namespace std;
 
+/**
+ * ReverseProblem class
+ */
 class ReverseProblem {
     string str;
 public:

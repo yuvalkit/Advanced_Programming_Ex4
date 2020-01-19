@@ -11,6 +11,9 @@
 
 using namespace std;
 
+/**
+ * Utils class
+ */
 class Utils {
 public:
     static vector<string> split(string str, const string& delimiter);

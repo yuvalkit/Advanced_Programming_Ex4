@@ -15,6 +15,9 @@
 
 using namespace std;
 
+/**
+ * SearchSolver class
+ */
 template <class T>
 class SearchSolver : public Solver<Searchable<T>*, vector<State<Node*>*>> {
 private:
@@ -24,6 +27,7 @@ public:
         this->searcher = inputSearcher;
     }
 
+    //a method for creating deep clone of the object
     Solver<Searchable<T>*, vector<State<Node*>*>>* getClone() {
         return new SearchSolver<T> (this->searcher->getClone());
     }

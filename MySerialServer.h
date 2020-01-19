@@ -10,6 +10,9 @@
 
 using namespace std;
 
+/**
+ * MySerialServer class
+ */
 class MySerialServer : public server_side::Server {
 private:
     thread t;

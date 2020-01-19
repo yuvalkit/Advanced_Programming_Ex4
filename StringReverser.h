@@ -10,8 +10,12 @@
 
 using namespace std;
 
+/**
+ * StringReverser class
+ */
 class StringReverser : public Solver<string, string> {
     string solve(string problem);
+    Solver<string, string>* getClone();
 };
 
 

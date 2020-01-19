@@ -22,6 +22,7 @@ int Node::getCost() {
     return this->cost;
 }
 
+// check if this current node is equal to the given node
 bool Node::isEqual(Node *node) {
     return this->i == node->getI() && this->j == node->getJ() && this->cost == node->getCost();
 }

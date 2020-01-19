@@ -9,6 +9,9 @@ MyTestClientHandler::MyTestClientHandler(Solver<string, string> *inputSolver, Ca
     this->cm = inputCm;
 }
 
+// get strings by client and send him the reverse strings until the client's input is 'end'
+// before solving the problem of reversing the string, check if there is a solution in cache
+// in case of new solution - save it in cache
 void MyTestClientHandler::handleClient(int clientSocket) {
     int isSent;
     char buffer[1024] = {0};
@@ -29,6 +32,7 @@ void MyTestClientHandler::handleClient(int clientSocket) {
             break;
         }
         ReverseProblem* rp = new ReverseProblem(current);
+        // check if there is a solution in cache
         if(this->cm->isExist(rp)) {
             solution = this->cm->getSolution(rp);
         } else {

@@ -7,6 +7,9 @@
 
 using namespace std;
 
+/**
+ * Node class
+ */
 class Node {
 private:
     int i;

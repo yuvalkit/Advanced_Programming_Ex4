@@ -7,9 +7,13 @@
 
 #include "State.h"
 
+/**
+ * StateComparator class
+ */
 template <class T>
 class StateComparator {
 public:
+    // compare between 2 states by comparing theirs 'getSum' data
     int operator() (State<T>* s1, State<T>* s2) {
         return s1->getSum() > s2->getSum();
     }

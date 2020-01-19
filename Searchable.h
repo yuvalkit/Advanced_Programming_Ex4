@@ -11,6 +11,9 @@
 
 using namespace std;
 
+/**
+ * Searchable interface
+ */
 template <class T>
 class Searchable {
 protected:

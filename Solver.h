@@ -5,6 +5,9 @@
 #ifndef ADVANCED_PROGRAMMING_EX4_SOLVER_H
 #define ADVANCED_PROGRAMMING_EX4_SOLVER_H
 
+/**
+ * StateComparator class
+ */
 template <class Problem, class Solution>
 class Solver {
 public:
