@@ -26,7 +26,6 @@ void MyClientHandler::handleClient(int clientSocket) {
     string solution;
     vector<State<Node*>*> solutionVector;
     Searchable<Node*>* searchable;
-    char c;
     int data = read(clientSocket, buffer, 1024);
     // getting the matrix line by line
     while (data != -1) {
