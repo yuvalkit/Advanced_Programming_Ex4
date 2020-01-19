@@ -27,8 +27,8 @@ public:
     }
 
     //check if the current state is equal to the given state
-    bool isEqual(State<T>* state) {
-        return this->state->isEqual(state->getState());
+    bool isEqual(State<T>* other) {
+        return this->state->isEqual(other->getState());
     }
 
     void setSum(int inputSum) {

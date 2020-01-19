@@ -61,8 +61,7 @@ public:
     // the AStar algorithm for finding the shortest path form the starting state to a goal state
     vector<State<T>*> search(Searchable<T>* searchable) {
         vector<State<T>*> successors;
-        int x1, y1, x2, y2;
-        double tentativeScore, distance;
+        double tentativeScore;
         // get the starting state
         State<T>* n = searchable->getInitialState();
         // get a goal state

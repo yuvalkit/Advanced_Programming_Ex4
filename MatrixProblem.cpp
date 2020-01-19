@@ -27,7 +27,7 @@ Searchable<Node *> * MatrixProblem::getClone() {
 // convert the strings vector to a unique string to represent the current matrix problem
 string MatrixProblem::makeProblemString() {
     string str = "";
-    for (int i = 0; i < this->problemVector.size(); i++) {
+    for (unsigned int i = 0; i < this->problemVector.size(); i++) {
         str += this->problemVector[i];
         if (i != this->problemVector.size() - 1) {
             str += "$";
@@ -42,7 +42,7 @@ void MatrixProblem::makeMatrix() {
     vector<string> cells;
     int size = this->problemVector.size();
     this->rows = this->problemVector.size() - 2;
-    for (int i = 0; i < size; i++) {
+    for (unsigned int i = 0; i < size; i++) {
         cells = Utils::split(this->problemVector[i], ",");
         if (i < size - 2) {
             if (i == 0) {
@@ -54,7 +54,7 @@ void MatrixProblem::makeMatrix() {
                     exit(1);
                 }
             }
-            for (int j = 0; j < cells.size(); j++) {
+            for (unsigned int j = 0; j < cells.size(); j++) {
                 this->matrix[i][j] = new State<Node*>(new Node(i, j, strtod(cells[j].c_str(), NULL)));
             }
         } else if (i == size - 2) {
@@ -113,7 +113,6 @@ vector<State<Node *> *> MatrixProblem::getAllPossibleStates(State<Node *> *state
     vector<State<Node *> *> result;
     int i = state->getState()->getI();
     int j = state->getState()->getJ();
-    int cost = state->getState()->getCost();
     bool isTop = false, isDown = false, isRight = false, isLeft = false;
     if(i == 0)  {
         isTop = true;
