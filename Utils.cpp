@@ -1,9 +1,6 @@
-//
-// Created by giladby on 09/01/2020.
-//
 
 #include "Utils.h"
-#include<math.h>
+#include <cmath>
 
 //split the given string by the given delimiter
 vector<string> Utils::split(string str, const string &delimiter) {

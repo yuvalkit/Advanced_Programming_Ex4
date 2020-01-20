@@ -1,12 +1,9 @@
-//
-// Created by yuvalkit on 14/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_DEPTHFIRSTSEARCH_H
 #define ADVANCED_PROGRAMMING_EX4_DEPTHFIRSTSEARCH_H
 
 #include "AbstractSearcher.h"
-#include "State.h"
+#include "../Components/State.h"
 
 /**
  * DepthFirstSearch class

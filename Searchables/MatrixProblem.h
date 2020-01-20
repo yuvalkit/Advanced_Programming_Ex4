@@ -1,6 +1,3 @@
-//
-// Created by giladby on 10/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_MATRIXPROBLEM_H
 #define ADVANCED_PROGRAMMING_EX4_MATRIXPROBLEM_H
@@ -8,8 +5,8 @@
 #include "Searchable.h"
 #include <string>
 #include <vector>
-#include "Node.h"
-#include "State.h"
+#include "../Components/Node.h"
+#include "../Components/State.h"
 
 using namespace std;
 

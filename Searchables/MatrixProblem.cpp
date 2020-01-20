@@ -1,10 +1,6 @@
-//
-// Created by giladby on 10/01/2020.
-//
 
 #include "MatrixProblem.h"
-#include "Utils.h"
-#include <limits>
+#include "../Utils.h"
 
 MatrixProblem::MatrixProblem(vector<string> inputProblem) {
     this->problemVector = inputProblem;

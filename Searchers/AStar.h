@@ -1,12 +1,9 @@
-//
-// Created by giladby on 14/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_ASTAR_H
 #define ADVANCED_PROGRAMMING_EX4_ASTAR_H
 
 #include "AbstractSearcher.h"
-#include "Utils.h"
+#include "../Utils.h"
 #include <unordered_map>
 #include <limits>
 

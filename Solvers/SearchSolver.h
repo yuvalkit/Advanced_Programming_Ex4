@@ -1,15 +1,12 @@
-//
-// Created by giladby on 13/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_SEARCHSOLVER_H
 #define ADVANCED_PROGRAMMING_EX4_SEARCHSOLVER_H
 
 #include "Solver.h"
-#include "Node.h"
-#include "Searchables/Searchable.h"
-#include "Searchers/Searcher.h"
-#include "State.h"
+#include "../Components/Node.h"
+#include "../Searchables/Searchable.h"
+#include "../Searchers/Searcher.h"
+#include "../Components/State.h"
 #include <vector>
 #include <iostream>
 

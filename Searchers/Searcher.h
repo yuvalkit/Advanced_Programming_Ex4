@@ -1,12 +1,9 @@
-//
-// Created by yuvalkit on 14/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_SEARCHER_H
 #define ADVANCED_PROGRAMMING_EX4_SEARCHER_H
 
-#include "Searchables/Searchable.h"
-#include "State.h"
+#include "../Searchables/Searchable.h"
+#include "../Components/State.h"
 
 using namespace std;
 

@@ -1,11 +1,8 @@
-//
-// Created by giladby on 09/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_SERVER_H
 #define ADVANCED_PROGRAMMING_EX4_SERVER_H
 
-#include "ClientHandlers/ClientHandler.h"
+#include "../ClientHandlers/ClientHandler.h"
 
 namespace server_side {
     /**

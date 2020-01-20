@@ -1,11 +1,9 @@
 
 #include "MyClientHandler.h"
-#include <thread>
 #include <unistd.h>
-#include <netinet/in.h>
 #include <sys/socket.h>
-#include "Utils.h"
-#include "Searchables/MatrixProblem.h"
+#include "../Utils.h"
+#include "../Searchables/MatrixProblem.h"
 
 MyClientHandler::MyClientHandler(Solver<Searchable<Node*>*, vector<State<Node*>*>> *inputSolver, CacheManager<Searchable<Node*>*, string> *inputCm) {
     this->cm = inputCm;

@@ -1,18 +1,16 @@
-//
-// Created by giladby on 09/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_MYCLIENTHANDLER_H
 #define ADVANCED_PROGRAMMING_EX4_MYCLIENTHANDLER_H
 
 #include "ClientHandler.h"
-#include "Solvers/Solver.h"
+#include "../Solvers/Solver.h"
 #include <vector>
 #include <string>
 #include <iostream>
-#include "CacheManagers/CacheManager.h"
-#include "Searchables/Searchable.h"
-#include "Node.h"
+#include "../CacheManagers/CacheManager.h"
+#include "../Searchables/Searchable.h"
+#include "../Components/Node.h"
+#include "../Components/State.h"
 
 using namespace std;
 

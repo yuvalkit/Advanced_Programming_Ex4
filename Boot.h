@@ -1,6 +1,3 @@
-//
-// Created by giladby on 09/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_BOOT_H
 #define ADVANCED_PROGRAMMING_EX4_BOOT_H
@@ -9,7 +6,7 @@
 #include "ClientHandlers/MyTestClientHandler.h"
 #include "CacheManagers/FileCacheManager.h"
 #include "Solvers/Solver.h"
-#include "Node.h"
+#include "Components/Node.h"
 #include "Searchers/BestFirstSearch.h"
 #include "Searchers/Searcher.h"
 #include "Servers/Server.h"

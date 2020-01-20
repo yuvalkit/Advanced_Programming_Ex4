@@ -1,13 +1,10 @@
-//
-// Created by giladby on 14/01/2020.
-//
 
 #ifndef ADVANCED_PROGRAMMING_EX4_ABSTRACTSEARCHER_H
 #define ADVANCED_PROGRAMMING_EX4_ABSTRACTSEARCHER_H
 
 #include "Searcher.h"
 #include <queue>
-#include "StateComparator.h"
+#include "../Components/StateComparator.h"
 #include <set>
 #include <vector>
 
