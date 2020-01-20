@@ -34,7 +34,6 @@ public:
 
     vector<State<Node*>*> solve(Searchable<Node*>* searchable) {
         vector<State<Node*>*> result = this->searcher->search(searchable);
-        cout << this->searcher->getNumberOfNodesEvaluated() << endl;
         return result;
     }
 };
