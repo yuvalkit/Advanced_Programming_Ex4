@@ -1,0 +1,49 @@
+Advanced Programming Ex4
+
+Yuval Kittenplon and Gilad Bet Yaakov
+
+****** github link: https://github.com/yuvalkit/Advanced_Programming_Ex4 ******
+
+
+
+In this project, our goal is to solve different types of problems given by different clients.
+We will do it by opening a server that serves clients.
+There are two types of servers:
+1. Serial Server - accpet and handle one client each time.
+2. Parallel Server - accpet and handle many clients parallelly.
+
+Each problem will be solved by a solver which will be injected in the main.
+Our program uses generic templates of problems and solutions. The user can choose which problem to send and configure in the main which solver to use.
+
+In this homework, we were asked to deal with these problems:
+1. string reversing - get a string and output the reversed string.
+2. matrix minimum path - get a matrix with a cost for each cell, and output the path with the minimum cost.
+
+For the first problem (string reversing), we implemented the string reverser solver.
+
+For the second problem (matrix minimum path) we implemented 4 different search algorithms:
+1. A-Star
+2. Best First Search
+3. Breadth First Search
+4. Depth First Search
+
+We have conducted an experiment to find which algorithm gives the best solution (finding the minimum path with the lowest complexity).
+We did that experiment by giving each algorithm 10 matrices to solve, and we found that A-Star gave the minimum path with the lowest complexity each time,
+so we chose to use A-Star in our program.
+
+In order to run our program, you will need to run the main.cpp file, it will listen as a server on the port 5600,
+then you will need to open a client, connect to the 5600 port, and send a matrix text file, line by line separated with '\n', each line composed by values of the matrix cells, separated with ',',
+then give a cell to start from, and the goal cell. The last line needs to be 'end'.
+A cell with the value '-1' is a "wall", that means the path can't go through it.
+for example:
+
+14,10,7,8
+4,3,8,-1
+2,0,23,4
+11,6,3,18
+0,0
+3,3
+end
+
+
+
