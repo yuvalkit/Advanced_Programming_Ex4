@@ -47,19 +47,16 @@ void MySerialServer::start(int port, ClientHandler *c) {
     while (!this->toStop) {
         struct sockaddr_in client;
         socklen_t clilen = sizeof(client);
-        cout << "listening" << endl;
         // accept a client
         clientSocket = accept(socketfd, (struct sockaddr *)&client, &clilen);
         if (clientSocket < 0) {
             if (errno == EWOULDBLOCK) {
-                cout << "timeout" << endl;
             } else {
                 cout << "error with client socket" << endl;
             }
             this->stop();
             continue;
         }
-        cout << "client connected" << endl;
         c->handleClient(clientSocket);
     }
     close(socketfd);
