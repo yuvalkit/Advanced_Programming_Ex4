@@ -6,12 +6,12 @@
 #define ADVANCED_PROGRAMMING_EX4_MYCLIENTHANDLER_H
 
 #include "ClientHandler.h"
-#include "Solver.h"
+#include "Solvers/Solver.h"
 #include <vector>
 #include <string>
 #include <iostream>
-#include "CacheManager.h"
-#include "Searchable.h"
+#include "CacheManagers/CacheManager.h"
+#include "Searchables/Searchable.h"
 #include "Node.h"
 
 using namespace std;

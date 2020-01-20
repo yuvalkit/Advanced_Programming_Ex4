@@ -7,8 +7,8 @@
 
 #include "Solver.h"
 #include "Node.h"
-#include "Searchable.h"
-#include "Searcher.h"
+#include "Searchables/Searchable.h"
+#include "Searchers/Searcher.h"
 #include "State.h"
 #include <vector>
 #include <iostream>

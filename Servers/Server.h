@@ -5,7 +5,7 @@
 #ifndef ADVANCED_PROGRAMMING_EX4_SERVER_H
 #define ADVANCED_PROGRAMMING_EX4_SERVER_H
 
-#include "ClientHandler.h"
+#include "ClientHandlers/ClientHandler.h"
 
 namespace server_side {
     /**

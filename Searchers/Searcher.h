@@ -5,7 +5,7 @@
 #ifndef ADVANCED_PROGRAMMING_EX4_SEARCHER_H
 #define ADVANCED_PROGRAMMING_EX4_SEARCHER_H
 
-#include "Searchable.h"
+#include "Searchables/Searchable.h"
 #include "State.h"
 
 using namespace std;

@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include "Utils.h"
-#include "MatrixProblem.h"
+#include "Searchables/MatrixProblem.h"
 
 MyClientHandler::MyClientHandler(Solver<Searchable<Node*>*, vector<State<Node*>*>> *inputSolver, CacheManager<Searchable<Node*>*, string> *inputCm) {
     this->cm = inputCm;
