@@ -32,9 +32,13 @@ namespace boot {
             Solver<Searchable<Node*>*, vector<State<Node*>*>>* s = new SearchSolver<Node*>(searcher);
             ClientHandler* c = new MyClientHandler(s, cm);
             server_side::Server* server = new MyParallelServer();
+            // set port to 5600 as default
+            int port = 5600;
+            // if there's an argument, set it as port
             if(argc >= 2) {
-                server->open(strtod(argv[1], NULL), c);
+                port = strtod(argv[1], NULL);
             }
+            server->open(port, c);
             return 0;
         }
     };
