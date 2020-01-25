@@ -143,6 +143,10 @@ vector<State<Node *> *> MatrixProblem::getAllPossibleStates(State<Node *> *state
 
 // make a string restoring the moves of the path from the starting state to the goal state, and for each move calculate the cumulative cost
 string MatrixProblem::getPath(vector<State<Node *>*> statesVector) {
+    // if there is no path to the goal
+    if (statesVector.empty()) {
+        return "There is no path";
+    }
     string result = "";
     int size = statesVector.size();
     State<Node*>* prev = statesVector[size - 1];

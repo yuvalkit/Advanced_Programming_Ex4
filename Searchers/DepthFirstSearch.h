@@ -41,8 +41,9 @@ public:
                 }
             }
         }
-        cerr << "error: cannot get the goal state" << endl;
-        exit(1);
+        // there is no path to goal
+        vector<State<T>*> emptyVector;
+        return emptyVector;
     }
 };
 
